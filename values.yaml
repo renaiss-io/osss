@@ -1,0 +1,63 @@
+domain: localhost
+
+# Deploy postgres DB if no external DB is set
+postgresql:
+  enabled: true
+  architecture: standalone
+
+  # Override defaults values for the DB
+  auth:
+    username: testuser
+    password: testpassword
+    database: keycloak
+
+  metrics:
+    enabled: true
+
+# IDP
+keycloak:
+  # Disable local postgres
+  postgresql:
+    enabled: false
+
+  # Use external DB
+  externalDatabase:
+    host: test-postgresql
+    database: keycloak
+    user: testuser
+    password: testpassword
+
+  # Enable prometheus metrics endpoint
+  metrics:
+    enabled: true
+
+# MONITORING
+prometheus:
+  enabled: true
+
+  prometheus-pushgateway:
+    enabled: false
+
+grafana:
+  enabled: true
+
+  # Enable hot reload of dashboards and datasources
+  sidecar:
+    dashboards:
+      enabled: true
+    datasources:
+      enabled: true
+
+
+# TOOLS
+kimai2:
+  enabled: true
+
+  kimaiAdminEmail: admin
+  kimaiAdminPassword: test1
+
+openproject:
+  enabled: false
+
+  postgresql:
+    bundled: false

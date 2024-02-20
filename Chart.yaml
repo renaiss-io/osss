@@ -1,0 +1,28 @@
+apiVersion: v2
+name: open-source-stack-for-startups
+version: 1.0.0
+
+dependencies:
+- name: keycloak
+  version: 18.4.0
+  repository: https://charts.bitnami.com/bitnami
+- name: postgresql
+  version: 13.4.4
+  repository: https://charts.bitnami.com/bitnami
+  condition: postgresql.enabled
+- name: prometheus
+  version: 25.13.0
+  repository: https://prometheus-community.github.io/helm-charts
+  condition: prometheus.enabled
+- name: grafana
+  version: 7.3.0
+  repository: https://grafana.github.io/helm-charts
+  condition: grafana.enabled
+- name: kimai2
+  version: 3.1.11
+  repository: https://robjuz.github.io/helm-charts
+  condition: kimai2.enabled
+- name: openproject
+  version: 4.5.0
+  repository: https://charts.openproject.org
+  condition: openproject.enabled
