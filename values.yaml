@@ -105,10 +105,10 @@ openproject:
       host: osss-postgresql
       port: 5432
 
-      auth:
-        database: openproject
-        username: testuser
-        password: testpassword
+    auth:
+      database: openproject
+      username: testuser
+      password: testpassword
 
   # Disable ingress
   ingress:
