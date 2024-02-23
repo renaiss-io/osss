@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-postgres
+  name: {{ .Release.Name }}-grafana-dashboards
   labels:
     grafana_dashboard: "true"
 data:
@@ -11,13 +11,13 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-datasource-prometheus
+  name: {{ .Release.Name }}-grafana-datasources
   labels:
     grafana_datasource: "true"
 data:
   prometheus.yml: |-
     apiVersion: 1
     datasources:
-      - name: prometheus
+      - name: prometheus-osss
         type: prometheus
-        url: http://test-prometheus-server
+        url: http://{{ .Release.Name }}-prometheus-server

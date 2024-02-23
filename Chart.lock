@@ -2,6 +2,9 @@ dependencies:
 - name: keycloak
   repository: https://charts.bitnami.com/bitnami
   version: 18.4.0
+- name: contour
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.5.2
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 13.4.4
@@ -17,5 +20,5 @@ dependencies:
 - name: openproject
   repository: https://charts.openproject.org
   version: 4.5.0
-digest: sha256:183a1265129a7c0cc05d924a342efbdc6a5e533ee4e7f17a4010151ed7975a48
-generated: "2024-02-19T14:19:55.305333059-03:00"
+digest: sha256:ee7a6ae300d8f73ce6147c8104d872509a44f2d8877674ecd9da32fe9b295779
+generated: "2024-02-22T20:49:37.454440502-03:00"

@@ -14,15 +14,31 @@ postgresql:
   metrics:
     enabled: true
 
+  primary:
+    initdb:
+      scripts:
+        create_dbs.sql: |
+          CREATE DATABASE openproject;
+
 # IDP
 keycloak:
   # Disable local postgres
   postgresql:
     enabled: false
 
+  # Create preconfigured realm
+  keycloakConfigCli:
+    enabled: true
+    existingConfigmap: "{{ .Release.Name }}-keycloak-realm"
+    backoffLimit: 5
+
+    cleanupAfterFinished:
+      enabled: true
+      seconds: 600
+
   # Use external DB
   externalDatabase:
-    host: test-postgresql
+    host: "{{ .Release.Name }}-postgresql"
     database: keycloak
     user: testuser
     password: testpassword
@@ -38,6 +54,9 @@ prometheus:
   prometheus-pushgateway:
     enabled: false
 
+  alertmanager:
+    enabled: false
+
 grafana:
   enabled: true
 
@@ -48,16 +67,49 @@ grafana:
     datasources:
       enabled: true
 
+  # Configure SSO with keycloak
+  grafana.ini:
+    server:
+      # root_url: grafana.localhost
+
+      auth.generic_oauth:
+        enabled: true
+        name: Keycloak-OAuth
+        allow_sign_up: true
+        client_id: grafana-oauth
+        client_secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
+        scopes: openid email profile offline_access roles
+        email_attribute_path: email
+        login_attribute_path: username
+        name_attribute_path: full_name
+        auth_url: https://keycloak.localhost/realms/osss/protocol/openid-connect/auth
+        token_url: https://keycloak.localhost/realms/osss/protocol/openid-connect/token
+        api_url: https://keycloak.localhost/realms/osss/protocol/openid-connect/userinfo
+        role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
 
 # TOOLS
 kimai2:
-  enabled: true
+  enabled: false
 
   kimaiAdminEmail: admin
   kimaiAdminPassword: test1
 
 openproject:
-  enabled: false
+  enabled: true
 
+  # Use common postgresql
   postgresql:
     bundled: false
+
+    connection:
+      host: osss-postgresql
+      port: 5432
+
+      auth:
+        database: openproject
+        username: testuser
+        password: testpassword
+
+  # Disable ingress
+  ingress:
+    enabled: false
