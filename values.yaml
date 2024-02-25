@@ -97,6 +97,9 @@ kimai2:
 openproject:
   enabled: true
 
+  openproject:
+    https: false
+
   # Use common postgresql
   postgresql:
     bundled: false
