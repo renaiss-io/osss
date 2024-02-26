@@ -97,6 +97,10 @@ kimai2:
 openproject:
   enabled: true
 
+  resources:
+    limits:
+      cpu: 2
+
   openproject:
     https: false
 
