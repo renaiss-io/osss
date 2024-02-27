@@ -58,7 +58,7 @@ prometheus:
     enabled: false
 
 grafana:
-  enabled: true
+  enabled: false
 
   # Enable hot reload of dashboards and datasources
   sidecar:
