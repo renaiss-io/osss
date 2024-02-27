@@ -26,6 +26,11 @@ keycloak:
   postgresql:
     enabled: false
 
+  # Root user configuration
+  auth:
+    adminUser: admin
+    adminPassword: admin
+
   # Create preconfigured realm
   keycloakConfigCli:
     enabled: true
@@ -51,14 +56,17 @@ keycloak:
 prometheus:
   enabled: true
 
+  # Disable pushgateway
   prometheus-pushgateway:
     enabled: false
 
+  # Disable alertmanager
   alertmanager:
     enabled: false
 
 grafana:
   enabled: true
+  assertNoLeakedSecrets: false
 
   # Enable hot reload of dashboards and datasources
   sidecar:
@@ -70,22 +78,22 @@ grafana:
   # Configure SSO with keycloak
   grafana.ini:
     server:
-      # root_url: grafana.localhost
+      root_url: http://grafana.localhost
 
-      auth.generic_oauth:
-        enabled: true
-        name: Keycloak-OAuth
-        allow_sign_up: true
-        client_id: grafana-oauth
-        client_secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
-        scopes: openid email profile offline_access roles
-        email_attribute_path: email
-        login_attribute_path: username
-        name_attribute_path: full_name
-        auth_url: https://keycloak.localhost/realms/osss/protocol/openid-connect/auth
-        token_url: https://keycloak.localhost/realms/osss/protocol/openid-connect/token
-        api_url: https://keycloak.localhost/realms/osss/protocol/openid-connect/userinfo
-        role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+    auth.generic_oauth:
+      enabled: true
+      name: keycloak
+      allow_sign_up: true
+      client_id: grafana-oauth
+      client_secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
+      scopes: openid email profile offline_access roles
+      email_attribute_path: email
+      login_attribute_path: username
+      name_attribute_path: full_name
+      auth_url: http://keycloak.localhost/realms/osss/protocol/openid-connect/auth
+      token_url: http://osss-keycloak/realms/osss/protocol/openid-connect/token
+      api_url: http://osss-keycloak/realms/osss/protocol/openid-connect/userinfo
+      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
 
 # TOOLS
 kimai2:
@@ -95,12 +103,37 @@ kimai2:
   kimaiAdminPassword: test1
 
 openproject:
-  enabled: true
+  enabled: false
 
+  # Override hostname
+  host: openproject.localhost
+
+  # Root user configuration
+  admin_user:
+    password: admin
+    password_reset: false
+    name: admin
+
+  # SSO with keycloak
+  oidc:
+    enabled: true
+    provider: Keycloak
+    displayName: Keycloak
+    host: keycloak.localhost
+    identifier: http://openprojects.localhost
+    secret: asd
+    issuer: http://keycloak.localhost/realms/osss
+    authorizationEndpoint: /realms/osss/protocol/openid-connect/auth
+    tokenEndpoint: /realms/osss/protocol/openid-connect/token
+    userinfoEndpoint: /realms/osss/protocol/openid-connect/userinfo
+    endSessionEndpoint: http://keycloak.localhost/realms/osss/protocol/openid-connect/logout
+
+  # Limit cpu to work in minikube
   resources:
     limits:
-      cpu: 2
+      cpu: 1
 
+  # Disable https (manage at ingress level)
   openproject:
     https: false
 
