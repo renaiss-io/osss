@@ -13,6 +13,10 @@ dependencies:
   version: 13.4.4
   repository: https://charts.bitnami.com/bitnami
   condition: postgresql.enabled
+- name: mariadb
+  condition: mariadb.enabled
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.5.7
 - name: prometheus
   version: 25.13.0
   repository: https://prometheus-community.github.io/helm-charts
@@ -29,3 +33,7 @@ dependencies:
   version: 4.5.0
   repository: https://charts.openproject.org
   condition: openproject.enabled
+- name: wiki
+  version: 2.2.0
+  repository: https://charts.js.wiki
+  condition: wiki.enabled

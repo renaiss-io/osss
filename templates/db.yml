@@ -3,7 +3,7 @@ kind: Secret
 type: Opaque
 
 metadata:
-  name: keycloak-db-secret
+  name: {{ .Release.Name }}-db
 
 data:
   username: {{ .Values.postgresql.auth.username | b64enc }}

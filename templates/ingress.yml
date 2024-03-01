@@ -15,6 +15,7 @@ spec:
                 name: {{ .Release.Name }}-keycloak
                 port:
                   number: 80
+    {{- if .Values.grafana.enabled }}
     - host: grafana.{{ .Values.domain }}
       http:
         paths:
@@ -25,6 +26,8 @@ spec:
                 name: {{ .Release.Name }}-grafana
                 port:
                   number: 80
+    {{- end }}
+    {{- if .Values.openproject.enabled }}
     - host: openproject.{{ .Values.domain }}
       http:
         paths:
@@ -35,3 +38,28 @@ spec:
                 name: {{ .Release.Name }}-openproject
                 port:
                   number: 8080
+    {{- end }}
+    {{- if .Values.kimai2.enabled }}
+    - host: kimai.{{ .Values.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-kimai2
+                port:
+                  number: 80
+    {{- end }}
+    {{- if .Values.wiki.enabled }}
+    - host: wiki.{{ .Values.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-wiki
+                port:
+                  number: 80
+    {{- end }}

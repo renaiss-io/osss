@@ -1,0 +1,58 @@
+{{- define "kimai.yml" -}}
+kimai:
+  saml:
+    provider: Keycloak
+    activate: true
+    title: Keycloak
+    mapping:
+        - { saml: $Email, kimai: email }
+        - { saml: $FirstName $LastName, kimai: alias }
+    roles:
+        resetOnLogin: true
+        attribute: Roles
+        mapping:
+            - { saml: Admins, kimai: ROLE_ADMIN }
+            - { saml: Management, kimai: ROLE_TEAMLEAD }
+    connection:
+        idp:
+            entityId: 'http://keycloak.localhost/auth/realms/osss'
+            singleSignOnService:
+                url: 'http://keycloak.localhost/auth/realms/osss/protocol/saml'
+                binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+            x509cert: 'MIIClzCCAX8CBgGN7C1aqDANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARvc3NzMB4XDTI0MDIyNzIwMDUxMVoXDTM0MDIyNzIwMDY1MVowDzENMAsGA1UEAwwEb3NzczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANeDeVxFtbD8gBMN1SUCgEGeWzAhnQu8nnH0j4ZFYlDqtFV1oIILyhsAwDbd8i/oesHov3fV1RDXWUS5rO+oZjiYxSuDP/QOBuRB82q6yY2rgAYcpjMrIbVwBU+dTh621pWuVsaFQxWcs8PNUHqgO330M1zFJzmfNNcpGERAxlNZqN0xU4ytEvjvKyKJ8ks8CIu+St5SxcpROKxP1kpgzMszc0H88KoxUqzuV2E2w+xZ8oyoKT9LgpZh+CP1CpU2U8S08B9zlFxobsJTrznGqkAWNG/hGbjUD6hGet+bxw2CMcamnpsQB0V74RCeiINo7M7yIwOe9e8rb+J1r3YwP/MCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAVwjauKEpfVecLFgKcVLHhK4kA7Wvn21iwaDjIppMD7AonB06eTZLs4QqEY5Ig/cH5HkI1wN5XkLJrhDYyoQtnlPsLFck8Tlo6+yWv02q22+sQoeKu1o+fTIPJJYZ3p/bvGGYCttnm3kxF8UctuCSF/pmQOMmJWZVjRRtx7moGA++x7oFLO+hdesQe2ADaoe4fYxdA9nLhhQd8IMbVYsL4DlCKKbZ7b+2OvlidMa50xxApI2HG1TZS5L7Gtp9zUSclxTsAu3Dx9S7wl04J548BAvOg87AuwSUCIciTbo/xZrTV0aeTCwJ+3llQT0Zi3hn5VQGxwS3UjaaI7R0Wos1ww=='
+        sp:
+            entityId: 'Kimai2'
+            assertionConsumerService:
+                url: 'http://kimai.localhost/auth/saml/acs'
+                binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+            singleLogoutService:
+                url: 'http://kimai.localhost/auth/saml/logout'
+                binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+        strict: true
+        debug: true
+        security:
+            nameIdEncrypted: false
+            authnRequestsSigned: false
+            logoutRequestSigned: false
+            logoutResponseSigned: false
+            wantMessagesSigned: false
+            wantAssertionsSigned: false
+            wantNameIdEncrypted: false
+            requestedAuthnContext: true
+            signMetadata: false
+            wantXMLValidation: true
+            signatureAlgorithm: 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
+            digestAlgorithm: 'http://www.w3.org/2001/04/xmlenc#sha256'
+        contactPerson:
+            technical:
+                givenName: 'Kimai Admin'
+                emailAddress: 'kimai-tech@example.com'
+            support:
+                givenName: 'Kimai Support'
+                emailAddress: 'kimai-support@example.com'
+        organization:
+            en:
+                name: 'Kimai'
+                displayname: 'Kimai'
+                url: 'https://www.kimai.org'
+{{- end -}}

@@ -8,6 +8,9 @@ dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 13.4.4
+- name: mariadb
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.5.7
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
   version: 25.13.0
@@ -20,5 +23,8 @@ dependencies:
 - name: openproject
   repository: https://charts.openproject.org
   version: 4.5.0
-digest: sha256:ee7a6ae300d8f73ce6147c8104d872509a44f2d8877674ecd9da32fe9b295779
-generated: "2024-02-22T20:49:37.454440502-03:00"
+- name: wiki
+  repository: https://charts.js.wiki
+  version: 2.2.0
+digest: sha256:ada5ec1267cc4718db682a533a248e6a03391efd3c5c4f4c6154278820d064b3
+generated: "2024-03-01T13:14:58.15487051-03:00"

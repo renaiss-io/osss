@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+
+metadata:
+  name: {{ .Release.Name }}-kimai2-config
+
+data:
+  local.yaml: {{ include "kimai.yml" . | b64enc }}

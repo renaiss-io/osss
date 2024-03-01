@@ -3,38 +3,79 @@
 id: osss
 realm: osss
 enabled: true
-roles:
-  client:
-    grafana-oauth: []
+components:
+  org.keycloak.keys.KeyProvider:
+  - id: eedcbe24-d6d6-4620-85d4-c3051ff0ffad
+    name: rsa-generated
+    providerId: rsa-generated
+    subComponents: {}
+    config:
+      privateKey:
+      - MIIEogIBAAKCAQEA14N5XEW1sPyAEw3VJQKAQZ5bMCGdC7yecfSPhkViUOq0VXWgggvKGwDANt3yL+h6wei/d9XVENdZRLms76hmOJjFK4M/9A4G5EHzarrJjauABhymMyshtXAFT51OHrbWla5WxoVDFZyzw81QeqA7ffQzXMUnOZ801ykYREDGU1mo3TFTjK0S+O8rIonySzwIi75K3lLFylE4rE/WSmDMyzNzQfzwqjFSrO5XYTbD7FnyjKgpP0uClmH4I/UKlTZTxLTwH3OUXGhuwlOvOcaqQBY0b+EZuNQPqEZ635vHDYIxxqaemxAHRXvhEJ6Ig2jszvIjA5717ytv4nWvdjA/8wIDAQABAoIBAGd6FgxK4ElBg5EihCPIBqL7ENeUXB5li0I15a/XorQtbTbXSqEGXh0HCEOP35hHLKHsSfqU7j+u1orcB//uQF6OY6VX2J4rGf4A+IpXcy0VmlvU56wL2pyOU859PiQbL/8gfUPGeoZm/h1WeHzYcJgyZ3L0qrfNDIb+kUs8Or2LnpcYzsszpucBW3zGBUNgAM9YU85hheSUqLx423MdThjTfGBHNj21WVVGgkAdfWd9QFnVuw+sblqp+QM1omCwRVeLaym0JviUpVnDz/1h/aCQF7tcHP9r9zopvmfht3oLa3fxBGtm2u1xd0rH3Gjq63yxHzXjTd5xcf+35gJ7E/kCgYEA8VkT9MgI+hTdrqgm95hv3cX4Qspl7nIcu52EGCHjyrLVUAQjbhfcpe4RAa1NhIu87qpDjG87fn7fq1UzK2TaFQhloh15BCntpeJDkLQSuUuDghZwN5Wg6NLAYk5F6b+J5df61T43m4EZ9JFRo+H6GgcaEo1muj+XipXaSMZIkw0CgYEA5JjjuyN7Kqlga8qEanohrYo0SnUy4KaWDhi3Y25j/WI3lPQYs9MZ0nsphP9evIBtDK2Z3lEJ9G4iGaysIxn7f1MrHtAKW2AhjhObs73+HNFIkllHjVQghjSgzNqFfJ/ICm4u2tOB9lY3ZtQxcT0FlEMudL+EMkRZY8GYsbfDXv8CgYB3lQNmTZblEmGkoHxuQYFsCSMxNMe8lZ3W9/zzWBdd364Br4s+iWQycvrKMewuuG4scwB1HMgFrSd15QktfxLvSPHSmXfUsFGn16xSjmaYmOnYEvYXFHRd586a5t2NK/JPh+worGMxEY6itz4UTWt2af5pIta7gba8W/OEC3r6IQKBgAh3LP/SKY6D5UE4p7y1tyeRFayoOHEfWjE9cxUokmVgzMQkYgHO0Ib97qSxPFXov6EXkLot8BtwNK0Uuu812B13/AHRHIETx0pWqY53e8Cfc3uP+NlgAzBVJJtRgF4EIMlaGTwbVxXDTZvuQcJ6ywkZj8/dA81EwLa0Ba6XKpILAoGAV2pkJPAT+UuSDIc5wzo2Mw4Q/YBCTvhBMjdpVmM7hFoFuVeVBTvzs/gD934ec5jmv/Re+A5HdHOAw8bo3xGvxam+LSjB9k4gVCjcfyJLAFSapEk2Q95latCD8FHabgxBJAkxZMfvlcFNr3j1m4MVd+//nWee7AJEAnNK3N37jpk=
+      keyUse:
+      - SIG
+      certificate:
+      - MIIClzCCAX8CBgGN7C1aqDANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARvc3NzMB4XDTI0MDIyNzIwMDUxMVoXDTM0MDIyNzIwMDY1MVowDzENMAsGA1UEAwwEb3NzczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANeDeVxFtbD8gBMN1SUCgEGeWzAhnQu8nnH0j4ZFYlDqtFV1oIILyhsAwDbd8i/oesHov3fV1RDXWUS5rO+oZjiYxSuDP/QOBuRB82q6yY2rgAYcpjMrIbVwBU+dTh621pWuVsaFQxWcs8PNUHqgO330M1zFJzmfNNcpGERAxlNZqN0xU4ytEvjvKyKJ8ks8CIu+St5SxcpROKxP1kpgzMszc0H88KoxUqzuV2E2w+xZ8oyoKT9LgpZh+CP1CpU2U8S08B9zlFxobsJTrznGqkAWNG/hGbjUD6hGet+bxw2CMcamnpsQB0V74RCeiINo7M7yIwOe9e8rb+J1r3YwP/MCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAVwjauKEpfVecLFgKcVLHhK4kA7Wvn21iwaDjIppMD7AonB06eTZLs4QqEY5Ig/cH5HkI1wN5XkLJrhDYyoQtnlPsLFck8Tlo6+yWv02q22+sQoeKu1o+fTIPJJYZ3p/bvGGYCttnm3kxF8UctuCSF/pmQOMmJWZVjRRtx7moGA++x7oFLO+hdesQe2ADaoe4fYxdA9nLhhQd8IMbVYsL4DlCKKbZ7b+2OvlidMa50xxApI2HG1TZS5L7Gtp9zUSclxTsAu3Dx9S7wl04J548BAvOg87AuwSUCIciTbo/xZrTV0aeTCwJ+3llQT0Zi3hn5VQGxwS3UjaaI7R0Wos1ww==
+      priority:
+      - '100'
+  - id: 6d1db77f-427f-4a15-91aa-31db6cf47f63
+    name: hmac-generated
+    providerId: hmac-generated
+    subComponents: {}
+    config:
+      kid:
+      - 3c0173e4-7f24-4a50-895b-0ab1fa95c8ab
+      secret:
+      - FjaK1hz13aPAsX4ajVPcGs1JFqlz5JdGL_YFcWkzCgjHAMMwsGbSCLxZu0S2FZAVlQtsjP8ZVOslIXFuZcfeyg
+      priority:
+      - '100'
+      algorithm:
+      - HS256
+  - id: 6ee5d9f8-1131-482d-ab54-7058c2507d7e
+    name: aes-generated
+    providerId: aes-generated
+    subComponents: {}
+    config:
+      kid:
+      - 15841585-dc79-4dce-8d31-7cabfa636859
+      secret:
+      - CDo1FA-8Z3E-1ptdSfsYbg
+      priority:
+      - '100'
+  - id: 4a8deee7-c1c8-42de-bee4-23bfc7f75a75
+    name: rsa-enc-generated
+    providerId: rsa-enc-generated
+    subComponents: {}
+    config:
+      privateKey:
+      - MIIEowIBAAKCAQEAzZOvCEf4VrO4Tsra+QLkZuUUDFlR5S0mqY/L64d92SEa1md6E7fKKd8NET1t1V9JiENYe84mHt70frsnYCAZU9gwZGZMyCHoPfyBruF8oDi0B4wmNIYscyHxXlyXj6MGU0Z1F/GzauM5J0DcUzTNcxfi659602AOzuB3qb/C6U8XaSQiv+0QjtyEpO4e8a3NDCQVatHryQZKlbMDWSs4ta9hQftggjQ1bpAbodXDMNXNxhfFKcQfPZLp3vIHv/XywhxQ1FThQFoVS34/9jeL15H5QmbV+0Y1KM/4kvlo7Ggfp+pEwmHtMx015ncV6wRAik4J3yXYLoZ7Vwt0BgtrawIDAQABAoIBADEi8gywKx8KIO0QVot7Uf14FrUm6ki1ZI7V1H9s6Lsryv7hR9ALt3IPos9yl9yOxIQh2LXq3bi2QMlD0ZMLyRH90/9DZmnVlO2v+41Bzyh6tSkyqfUW9uvj+o274uwNotbnudgpyOEtA32q5p6qucqfNHluKoz4YkG3bFKyB5P9Cgo7rEzMIp4dADwWDXaE8nH/QfoIpTM4/pWLrxyhAz51tIi4hUrJfpWBdb3qbjyNnuM6NFF56eiKXMeC3yuq+QlmaRJq+kw5aQcx4/0A24sMgg66HrriGVbOsL1gCUXsqnP+I7RYddqnK88ADO2TV7DO1kD54FvMC748tHpPDPUCgYEA+PnBH8inOHNk60xyX/ol3U9jl/9vpHgWxXxcQvv9pWwyP95YPzMBlPXSFF/qcxMsZrSMcm/+GYg/tzp5b8PKh/Jlw7NvanBKWNx5gipZqYFhlijxk0LaCK6Accr5A9lx+fvqVkRdZWcmMGjnBzLAsmeaWhusoQZ2gVBFFJH58AcCgYEA02B6j5QwLNcOBQKEIxsFRvvQpSTOVzxwT8WrCUepLVmaf5LExXVchf8aXEhIJzwij2FYFHUEHCwM2HMB6P69wSTJKoLpKYZecDWsYbUBfnwBUYTgKKl0mEJisAEuGlbwnf4Hw8O5h9XzLGIeE5zDTThOdX8s35CmJAn0UzI3CH0CgYEAlrbZaVwVnd58oNNOCTtr4GRGbaR6+JyZbEKztvjDuneck30M/nTp6DpGSX8mdTKOFj4FJuEUeHA54bjL+hQTbegWIjlkoJII73HHPDxWun1PjY6LbhFx2v+HUVsFEod2r1UHreEEiHXAcF2QPJNEgrqkfRdzkKZQ5kapCqKzIdECgYAKMFFYEGWOE8OqPCfQZWIIvOSewTps/A3R2o5XASxHclU/JvzzI6gVEWnc3uMTeROVY7TSL53GGd14pXqHF5hf8fz8XpkMllyA/iVUBFyREzshCc2gSCLFoBWPtE7bmCs7Al6vcgTEZmy1S/l1Ko5Db55gjYPFNvy7Kfur8vSyJQKBgFLnG2smGoiFf/ugLWCDAvap2BSD6WsjJDfy2sU+DcxGfaBKH6qnvs/1Kh6XjrwR7ijMf9KuqsWlnMNjXg/LqgAnTqYDTP+pvsYVxGOHSe9x1l+tnMAXUN1+C9OG7otjeAUokRtjEFa4VQhKOs4ZTkd3AyAwOyoNOu5mGaDmY0S8
+      keyUse:
+      - ENC
+      certificate:
+      - MIIClzCCAX8CBgGN7C1bKzANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARvc3NzMB4XDTI0MDIyNzIwMDUxMVoXDTM0MDIyNzIwMDY1MVowDzENMAsGA1UEAwwEb3NzczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAM2TrwhH+FazuE7K2vkC5GblFAxZUeUtJqmPy+uHfdkhGtZnehO3yinfDRE9bdVfSYhDWHvOJh7e9H67J2AgGVPYMGRmTMgh6D38ga7hfKA4tAeMJjSGLHMh8V5cl4+jBlNGdRfxs2rjOSdA3FM0zXMX4uufetNgDs7gd6m/wulPF2kkIr/tEI7chKTuHvGtzQwkFWrR68kGSpWzA1krOLWvYUH7YII0NW6QG6HVwzDVzcYXxSnEHz2S6d7yB7/18sIcUNRU4UBaFUt+P/Y3i9eR+UJm1ftGNSjP+JL5aOxoH6fqRMJh7TMdNeZ3FesEQIpOCd8l2C6Ge1cLdAYLa2sCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAoiT8kX/4oIBjx5wW2sO9VonwgvQ0WWpS0/OSvAc58886tN1YVZFak6b9AKgC5SYXRAU8pL5HXiD3Oyqm69dvv0qdMUWN2F+uh3hwzIk0ATt6DikGAwKnKET+rBiwpH4T0Ba1IWPfkC4J9SQvbz4ozojnPMh9ETCAOlEIVsjUTJMHL0CnxrsTSMKlglKc3cE1ZE2hrPMklswjxTx1N6ZJ525/1WPZsv/3Wofqb3GWQd0hg79oKHvW4/VXrvmVoUL7VTTKvQeBFAeKS0QLzEdi0N/YSHrW74d7pWTeZclkoNSUEUVRbSOLnVTuD7k2fnx/oL3UpIysLD/jH+qMeGMdiQ==
+      priority:
+      - '100'
+      algorithm:
+      - RSA-OAEP
 users:
 - id: test
   email: test@example.com
   firstName: Test
   lastName: Test
-  createdTimestamp: 1708463938045
   username: test
   enabled: true
-  totp: false
   emailVerified: true
   credentials:
-  - id: 616e51a1-c671-47a4-bfe7-d99a5074802e
+  - id: pwd
     type: password
-    userLabel: My password
-    createdDate: 1708463947457
     secretData: '{"value":"3ZPSl7/19IzhuCZCsoQI1E6Aj3EA08guyee6o7EWG+0=","salt":"kYx1y7Ffpuu562pD2OQogg==","additionalParameters":{}}'
     credentialData: '{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}'
-  disableableCredentialTypes: []
-  requiredActions: []
-  realmRoles:
-  - default-roles-osss
-  notBefore: 0
-  groups: []
 clients:
-- id: grafana-oauth
+- id: grafana
   name: grafana
-  clientId: grafana-oauth
+  clientId: grafana
   secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
-  description: 'Client for grafana SSO'
+  description: SSO for grafana
   rootUrl: http://grafana.localhost
   adminUrl: http://grafana.localhost
   baseUrl: http://grafana.localhost
@@ -62,4 +103,80 @@ clients:
   - phone
   - offline_access
   - microprofile-jwt
+- id: kimai
+  clientId: kimai
+  name: Kimai
+  description: SSO for Kimai
+  rootUrl: http://kimai.localhost
+  baseUrl: http://kimai.localhost
+  enabled: true
+  clientAuthenticatorType: client-secret
+  redirectUris:
+  - http://kimai.localhost/*
+  webOrigins:
+  - http://kimai.localhost
+  protocol: saml
+  attributes:
+    saml.assertion.signature: 'false'
+    saml.force.post.binding: 'true'
+    saml.encrypt: 'false'
+    post.logout.redirect.uris: http://kimai.localhost/*
+    saml.server.signature: 'true'
+    saml.server.signature.keyinfo.ext: 'false'
+    saml.signing.certificate: MIICmTCCAYECBgGN7C3PrjANBgkqhkiG9w0BAQsFADAQMQ4wDAYDVQQDDAVraW1haTAeFw0yNDAyMjcyMDA1NDFaFw0zNDAyMjcyMDA3MjFaMBAxDjAMBgNVBAMMBWtpbWFpMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1ecKB9puGViqOAKqdqTRZBjuNaCJqYJuCX1rTUG3J55HoezkkDNklJ55Em5JmEQTt0gETqFY+85D5JksgFTE8VQqmJYqqXkokL2SzotBGR20mnwk4rnzUWDRJ/ALy7Ogv/yP+YktlCDkt3ux+pwm0ZfMhM3LiAYQndbby+hY7RLa88WqyRMg5yxX8EVAiOBiAbdrPxiTv2UtGDffTpwYY07X3oV9NQ+YFwXdQR3VL6NLyj2ArcCYBXPeyCouolsM1m2qlwX8FsTSa3Tqi6m29IzVrvh+Yo2d1ySidOcr0gMGjCWXS/RNr2iirTjRVwWSb+LV6vPiPEc84pbohETi8QIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAqQsHbcUpDWnd5+dyni9U9ipSvWgGjvwk3lJvctmsybHIXQVOUMIxvZMOBNn1lKfsLOXmncKtpJSzv0gvY8r3q4rGi8y+0mcExYH6DUCYXRzjOQP+R7H6l59Q1wWDfb/sm4UAWRFZ8WHrJNv7tjHMizSi+lHCfnn8ZG215tGbPhY8352+9UyssLw1PiAx7Ix9AohyPtq2+nbINheQxYyz1IWtawYJOe7msWFr5zX/fB/Gcy59INK5O70r3+ItVrF0pRRSM53sf6V9e35SQ60EfrOQRjTgFC7YWY4GpzeOkjAvtDhfJ7P73nDDJmf4joE8kgneMqzZom97LLaxjpB4Z
+    saml.artifact.binding.identifier: 6Sir8RbZM3c7Hk4xRFIT8fGwFgk=
+    saml.artifact.binding: 'false'
+    saml.signature.algorithm: RSA_SHA256
+    saml_force_name_id_format: 'false'
+    saml.client.signature: 'false'
+    saml.authnstatement: 'true'
+    display.on.consent.screen: 'false'
+    saml_name_id_format: username
+    saml.signing.private.key: MIIEowIBAAKCAQEA1ecKB9puGViqOAKqdqTRZBjuNaCJqYJuCX1rTUG3J55HoezkkDNklJ55Em5JmEQTt0gETqFY+85D5JksgFTE8VQqmJYqqXkokL2SzotBGR20mnwk4rnzUWDRJ/ALy7Ogv/yP+YktlCDkt3ux+pwm0ZfMhM3LiAYQndbby+hY7RLa88WqyRMg5yxX8EVAiOBiAbdrPxiTv2UtGDffTpwYY07X3oV9NQ+YFwXdQR3VL6NLyj2ArcCYBXPeyCouolsM1m2qlwX8FsTSa3Tqi6m29IzVrvh+Yo2d1ySidOcr0gMGjCWXS/RNr2iirTjRVwWSb+LV6vPiPEc84pbohETi8QIDAQABAoIBABm9GVnkkMcAAkuHFpf8MS4ISfGuBaKeDTubGeRL+gwMYbY8WSx44qt3fj4Xg0eNOYoeYlZL1/dE1KqXO+GdUa1wYUfHGg8WgykXhqjP3N920ZqdQZr+oSazrbdOjTzPupIfg/uU5CUk6CCkA8CSNaGW0IdSdCFECY/UoNIifUDZgZq7yaAwlVsJzvdqfvNibyfZRDc53livHRqmW+jxlq6lT8E1ilEiRsSZhy0aOz6rwyvTofc6hoteFunYibgZ5Z/+xGCBZOMeeiC4kOMVdy9tBhzJJlmLdiNQpirh1qdKIeRHUoUH3cnwZntuBKbg80wCSpJJqWs3EDNnDSL5viECgYEA9R6zVri88fQelgz6DnCLXHbWT5p/zcYkeg/8g011sfUF2FwT2ACdkwmB9+MN8TG6B/xM+unrV/4JETFEIx0RYO1w2Ip6qFf2uZgGQvyyvgHPeXlpNMD2IY7Sol3iTpoGNhyY7pwBnZyNDOJ493V6W4GckDWASyJzQr208gPJ6i0CgYEA32WdYu6y2K0Xblq1ZsDVOzn4BkQ+vGllY5JHve8ul8QubkFILGwRJ5CGTjN9ibdvRotuGDVOaGp48plRk0Iq5+eL502bUYVujTKnq+t4v8j8auN0DA9BqijOWU/1TBMFBXddsS5YRON0y32aIH2SamKiQKA2opBuQiGH5OgB6lUCgYABSV/3nJChVH60muzVFpIkshr93/m7wsZ+PYc9yTJM9NRLBnC0OYyaMPqVqoNwOKqZUCG3T3MEyziQ9ok9BfIJaDWnbVKnf46z+rBNubXWeXv1T0XWGQ0xr+Y7I/MEJprRveSvm/IGOcQjxSyNX/h8cnm36A/8VPn157kDbDGrIQKBgQCvQzFu5IY7p9CyK0gWDUM87AXCJNhzSNzaeXD/eh67wpYKufy9nSr4N1KnF45t9RO/7LO7GlchZCbvbYmqVkcDGY2RMjmgg2ZwMEWLg3mAPVaLJVdt/qotrUX2m9x+io1t9G/1Cb8GjMycuTWqN9oezLMusIMsltNp3pSW6c5W4QKBgFxIpkKLU3x2BRVXzqinT5Ns7waoyhn6rtndVKyGI9ihkHQWdi7uQMSpqKyPUpRQ1ia9V6iGmzrygRLllvEGFm+2df1xAuqqhuY+yufJoETwxPASE+Z/NuQwywY3oG2smE7RvesjyDbTG304VUOWeuioUOzcq4vnd2zWCeF2H5Fe
+    saml.allow.ecp.flow: 'false'
+    saml_signature_canonicalization_method: http://www.w3.org/2001/10/xml-exc-c14n#
+    saml.onetimeuse.condition: 'false'
+    saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer: KEY_ID
+  protocolMappers:
+  - id: 9f99ca87-46e4-4b32-a6f9-472feef39a2d
+    name: role list
+    protocol: saml
+    protocolMapper: saml-role-list-mapper
+    consentRequired: false
+    config:
+      single: 'false'
+      attribute.nameformat: Basic
+      attribute.name: Role
+  - id: e6082cc0-346a-43d4-ab9e-4b7f69623c57
+    name: X500 surname
+    protocol: saml
+    protocolMapper: saml-user-property-mapper
+    consentRequired: false
+    config:
+      attribute.nameformat: Unspecified
+      user.attribute: lastName
+      friendly.name: surname
+      attribute.name: LastName
+  - id: cba1452a-adb2-43d9-afe7-a1930dbffdb9
+    name: X500 givenName
+    protocol: saml
+    protocolMapper: saml-user-property-mapper
+    consentRequired: false
+    config:
+      attribute.nameformat: Unspecified
+      user.attribute: firstName
+      friendly.name: givenName
+      attribute.name: FirstName
+  - id: aa86f714-cc72-4910-837b-32a618b3763a
+    name: X500 email
+    protocol: saml
+    protocolMapper: saml-user-property-mapper
+    consentRequired: false
+    config:
+      attribute.nameformat: Unspecified
+      user.attribute: email
+      friendly.name: email
+      attribute.name: Email
+  defaultClientScopes:
+  - role_list
 {{- end -}}

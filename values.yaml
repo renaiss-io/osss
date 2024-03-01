@@ -1,5 +1,11 @@
+###############################################################
+# BASE VARIABLES
+###############################################################
 domain: localhost
 
+###############################################################
+# DATABASES
+###############################################################
 # Deploy postgres DB if no external DB is set
 postgresql:
   enabled: true
@@ -18,9 +24,33 @@ postgresql:
     initdb:
       scripts:
         create_dbs.sql: |
+          CREATE DATABASE wiki;
           CREATE DATABASE openproject;
 
+mariadb:
+  enabled: true
+  architecture: standalone
+
+  metrics:
+    enabled: true
+
+  auth:
+    rootPassword: kimaiR00tPassw0rd
+    database: kimai
+    username: kimai
+    password: kimai
+
+  primary:
+    persistence:
+      enabled: true
+      storageClass:
+      accessModes:
+        - ReadWriteOnce
+      size: 4Gi
+
+###############################################################
 # IDP
+###############################################################
 keycloak:
   # Disable local postgres
   postgresql:
@@ -52,7 +82,9 @@ keycloak:
   metrics:
     enabled: true
 
+###############################################################
 # MONITORING
+###############################################################
 prometheus:
   enabled: true
 
@@ -80,11 +112,14 @@ grafana:
     server:
       root_url: http://grafana.localhost
 
+    # dashboards:
+    #   default_home_dashboard_path:
+
     auth.generic_oauth:
       enabled: true
       name: keycloak
       allow_sign_up: true
-      client_id: grafana-oauth
+      client_id: grafana
       client_secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
       scopes: openid email profile offline_access roles
       email_attribute_path: email
@@ -95,12 +130,27 @@ grafana:
       api_url: http://osss-keycloak/realms/osss/protocol/openid-connect/userinfo
       role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
 
+###############################################################
 # TOOLS
+###############################################################
 kimai2:
   enabled: false
 
   kimaiAdminEmail: admin
-  kimaiAdminPassword: test1
+  kimaiAdminPassword: admin
+
+  configurationFromSecret:
+    enabled: true
+
+  mariadb:
+    enabled: false
+
+  externalDatabase:
+    host: osss-mariadb
+    port: 3306
+    user: kimai
+    password: kimai
+    database: kimai
 
 openproject:
   enabled: false
@@ -153,3 +203,18 @@ openproject:
   # Disable ingress
   ingress:
     enabled: false
+
+wiki:
+  enabled: false
+
+  ingress:
+    enabled: false
+
+  postgresql:
+    enabled: false
+
+    postgresqlHost: osss-postgresql
+    postgresqlDatabase: wiki
+    postgresqlUser: testuser
+    existingSecret: osss-db
+    existingSecretKey: password
