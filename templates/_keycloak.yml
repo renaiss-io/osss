@@ -71,6 +71,7 @@ users:
     secretData: '{"value":"3ZPSl7/19IzhuCZCsoQI1E6Aj3EA08guyee6o7EWG+0=","salt":"kYx1y7Ffpuu562pD2OQogg==","additionalParameters":{}}'
     credentialData: '{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}'
 clients:
+{{- if .Values.grafana.enabled }}
 - id: grafana
   name: grafana
   clientId: grafana
@@ -103,6 +104,42 @@ clients:
   - phone
   - offline_access
   - microprofile-jwt
+{{- end }}
+{{- if .Values.planka.enabled }}
+- id: planka
+  name: planka
+  clientId: planka
+  secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZy2
+  description: SSO for planka
+  rootUrl: http://planka.localhost
+  adminUrl: http://planka.localhost
+  baseUrl: http://planka.localhost
+  enabled: true
+  clientAuthenticatorType: client-secret
+  redirectUris:
+  - http://planka.localhost
+  webOrigins:
+  - http://planka.localhost
+  standardFlowEnabled: true
+  implicitFlowEnabled: false
+  directAccessGrantsEnabled: true
+  serviceAccountsEnabled: false
+  publicClient: false
+  frontchannelLogout: true
+  protocol: openid-connect
+  defaultClientScopes:
+  - web-origins
+  - acr
+  - profile
+  - roles
+  - email
+  optionalClientScopes:
+  - address
+  - phone
+  - offline_access
+  - microprofile-jwt
+{{- end }}
+{{- if .Values.kimai2.enabled }}
 - id: kimai
   clientId: kimai
   name: Kimai
@@ -179,4 +216,5 @@ clients:
       attribute.name: Email
   defaultClientScopes:
   - role_list
+{{- end }}
 {{- end -}}

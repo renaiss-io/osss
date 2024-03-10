@@ -18,6 +18,9 @@ data:
   prometheus.yml: |-
     apiVersion: 1
     datasources:
-      - name: prometheus-osss
+      - name: prometheus
         type: prometheus
         url: http://{{ .Release.Name }}-prometheus-server
+      - name: loki
+        type: loki
+        url: http://{{ .Release.Name }}-loki:3100

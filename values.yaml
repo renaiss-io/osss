@@ -4,6 +4,12 @@
 domain: localhost
 
 ###############################################################
+# NETWORK
+###############################################################
+cert-manager:
+  enabled: false
+
+###############################################################
 # DATABASES
 ###############################################################
 # Deploy postgres DB if no external DB is set
@@ -23,7 +29,8 @@ postgresql:
   primary:
     initdb:
       scripts:
-        create_dbs.sql: |
+        00_create_dbs.sql: |
+          CREATE DATABASE planka;
           CREATE DATABASE wiki;
           CREATE DATABASE openproject;
 
@@ -96,9 +103,53 @@ prometheus:
   alertmanager:
     enabled: false
 
+promtail:
+  enabled: true
+
+  config:
+    clients:
+      - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
+
+loki:
+  enabled: true
+
+  test:
+    enabled: false
+
+  gateway:
+    enabled: false
+
+  monitoring:
+    lokiCanary:
+      enabled: false
+
+    selfMonitoring:
+      enabled: false
+
+      serviceMonitor:
+        enabled: false
+
+      grafanaAgent:
+        installOperator: false
+
+  loki:
+    auth_enabled: false
+
+    commonConfig:
+      replication_factor: 1
+
+    storage:
+      type: filesystem
+
+  singleBinary:
+    replicas: 1
+
 grafana:
   enabled: true
   assertNoLeakedSecrets: false
+
+  adminUser: admin
+  adminPassword: admin
 
   # Enable hot reload of dashboards and datasources
   sidecar:
@@ -218,3 +269,29 @@ wiki:
     postgresqlUser: testuser
     existingSecret: osss-db
     existingSecretKey: password
+
+planka:
+  enabled: true
+
+  admin_email: admin
+  admin_password: admin
+  admin_username: admin
+  admin_name: admin
+
+  baseUrl: http://planka.localhost
+  secretkey: 4dab9dc2d9011d9114b9a96e531926598adad75c70b41e78311bf96097d327812c191091852b9a7ed90e56058b4ee52ba2398ba54398f7bc9c7827785cc3a342
+
+  postgresql:
+    enabled: false
+
+    auth:
+      database: planka
+      username: testuser
+      password: testpassword
+
+  oidc:
+    enabled: false
+
+    clientId: planka
+    clientSecret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZy2
+    issuerUrl: http://osss-keycloak/realms/osss

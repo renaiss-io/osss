@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: osss-ingress
+  annotations:
+    projectcontour.io/websocket-routes: /socket.io
 spec:
   ingressClassName: contour
   rules:
@@ -62,4 +64,24 @@ spec:
                 name: {{ .Release.Name }}-wiki
                 port:
                   number: 80
+    {{- end }}
+    {{- if .Values.planka.enabled }}
+    - host: planka.{{ .Values.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-planka
+                port:
+                  number: 1337
+          # Enable ws, required by planka
+          - path: /socket.io
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-planka
+                port:
+                  number: 1337
     {{- end }}
