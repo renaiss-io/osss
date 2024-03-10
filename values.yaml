@@ -28,11 +28,7 @@ postgresql:
 
   primary:
     initdb:
-      scripts:
-        00_create_dbs.sql: |
-          CREATE DATABASE planka;
-          CREATE DATABASE wiki;
-          CREATE DATABASE openproject;
+      scriptsConfigMap: "{{ .Release.Name }}-postgres-init"
 
 mariadb:
   enabled: true
