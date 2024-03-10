@@ -38,5 +38,8 @@ dependencies:
 - name: planka
   repository: file://./planka
   version: 0.1.17
-digest: sha256:caaeba505b14dea9f7449a2b716333ebcc1c73cb1955507ebe14dcc5137c1ead
-generated: "2024-03-10T11:44:38.797088216-03:00"
+- name: plane-ce
+  repository: https://helm.plane.so
+  version: 1.0.11
+digest: sha256:2cb996e9f3548e9930e10b1ec259dd4ed75629492af0f466e579538aad1b3d7c
+generated: "2024-03-10T19:10:54.292242315-03:00"

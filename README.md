@@ -2,12 +2,27 @@
 
 This repository contains the required artifacts to enable an easy and opinionated environment that consists on open source tools to manage operations.
 
-## Tools list
+## Tools available
 
-- Keycloak: an open source tools for identity management, developed and maintained by CNCF, used as the source of truth of users and access roles, and integrated with all the rest of the tools.
-- Kimai:
-- OpenProject:
-- Mattermost: 
-- Prometheus:
-- Loki: 
-- Grafana: 
+- `Kimai`: time tracking tool.
+- `OpenProject`: project management.
+- `Planka`: project management, similar to trello.
+- `Plane`: project management.
+
+## Software used
+
+### IdP
+
+- `Keycloak`: identity management, developed and maintained by CNCF, used as the source of truth of users and access roles, and integrated with all the tools that support SSO. It can be integrated with a preexistent IdP.
+
+### Network
+
+- `Cert manager`: used to manage SSL certs used in the system.
+- `Contour`: used to create an envoy ingress to redirect traffic to specific apps.
+
+### Monitoring
+
+- `Grafana`: used to present health dashboards and configure alerts.
+- `Loki`: used to store logs from the system.
+- `Prometheus`: used to collect and store metrics from the system.
+- `Promtail`: used to collect logs from the system.

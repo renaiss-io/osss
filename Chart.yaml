@@ -53,3 +53,7 @@ dependencies:
   version: 0.1.17
   repository: file://./planka
   condition: planka.enabled
+- name: plane-ce
+  repository: https://helm.plane.so
+  version: 1.0.11
+  condition: plane-ce.enabled

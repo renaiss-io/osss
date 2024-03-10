@@ -6,6 +6,7 @@ domain: localhost
 ###############################################################
 # NETWORK
 ###############################################################
+# TODO: implement cert manager in a production environment
 cert-manager:
   enabled: false
 
@@ -18,6 +19,7 @@ postgresql:
   architecture: standalone
 
   # Override defaults values for the DB
+  # TODO: use secrets for DB credentials
   auth:
     username: testuser
     password: testpassword
@@ -37,6 +39,7 @@ mariadb:
   metrics:
     enabled: true
 
+  # TODO: use secrets for DB credentials
   auth:
     rootPassword: kimaiR00tPassw0rd
     database: kimai
@@ -60,6 +63,7 @@ keycloak:
     enabled: false
 
   # Root user configuration
+  # TODO: use secrets for root user credentials
   auth:
     adminUser: admin
     adminPassword: admin
@@ -75,6 +79,7 @@ keycloak:
       seconds: 600
 
   # Use external DB
+  # TODO: use secrets for DB credentials
   externalDatabase:
     host: "{{ .Release.Name }}-postgresql"
     database: keycloak
@@ -144,6 +149,7 @@ grafana:
   enabled: true
   assertNoLeakedSecrets: false
 
+  # TODO: use secret for root user
   adminUser: admin
   adminPassword: admin
 
@@ -159,9 +165,11 @@ grafana:
     server:
       root_url: http://grafana.localhost
 
+    # TODO: change default dashboard
     # dashboards:
     #   default_home_dashboard_path:
 
+    # TODO: use secrets for sensible parameters
     auth.generic_oauth:
       enabled: true
       name: keycloak
@@ -183,6 +191,7 @@ grafana:
 kimai2:
   enabled: false
 
+  # TODO: use secret for root user
   kimaiAdminEmail: admin
   kimaiAdminPassword: admin
 
@@ -206,12 +215,14 @@ openproject:
   host: openproject.localhost
 
   # Root user configuration
+  # TODO: use secret for root user
   admin_user:
     password: admin
     password_reset: false
     name: admin
 
   # SSO with keycloak
+  # TODO: research if can be implemented in free version
   oidc:
     enabled: true
     provider: Keycloak
@@ -226,6 +237,7 @@ openproject:
     endSessionEndpoint: http://keycloak.localhost/realms/osss/protocol/openid-connect/logout
 
   # Limit cpu to work in minikube
+  # TODO: parametrize and use default for minikube
   resources:
     limits:
       cpu: 1
@@ -238,10 +250,12 @@ openproject:
   postgresql:
     bundled: false
 
+    # TODO: parametrize values
     connection:
       host: osss-postgresql
       port: 5432
 
+    # TODO: use secrets for DB credentials
     auth:
       database: openproject
       username: testuser
@@ -260,6 +274,7 @@ wiki:
   postgresql:
     enabled: false
 
+    # TODO: use secrets for DB credentials
     postgresqlHost: osss-postgresql
     postgresqlDatabase: wiki
     postgresqlUser: testuser
@@ -280,14 +295,20 @@ planka:
   postgresql:
     enabled: false
 
+    # TODO: use secrets for DB credentials
     auth:
       database: planka
       username: testuser
       password: testpassword
 
+  # TODO: implement planka OIDC
   oidc:
     enabled: false
 
     clientId: planka
     clientSecret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZy2
     issuerUrl: http://osss-keycloak/realms/osss
+
+# TODO: configure plane-ce
+plane-ce:
+  enabled: false
