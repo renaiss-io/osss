@@ -81,6 +81,7 @@ clients:
   adminUrl: http://grafana.localhost
   baseUrl: http://grafana.localhost
   enabled: true
+  alwaysDisplayInConsole: true
   clientAuthenticatorType: client-secret
   redirectUris:
   - http://grafana.localhost/login/generic_oauth
@@ -122,6 +123,7 @@ clients:
   - http://planka.localhost
   standardFlowEnabled: true
   implicitFlowEnabled: false
+  alwaysDisplayInConsole: true
   directAccessGrantsEnabled: true
   serviceAccountsEnabled: false
   publicClient: false
@@ -148,6 +150,7 @@ clients:
   baseUrl: http://kimai.localhost
   enabled: true
   clientAuthenticatorType: client-secret
+  alwaysDisplayInConsole: true
   redirectUris:
   - http://kimai.localhost/*
   webOrigins:
