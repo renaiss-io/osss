@@ -121,6 +121,9 @@ loki:
     enabled: false
 
   monitoring:
+    dashboards:
+      enabled: false
+
     lokiCanary:
       enabled: false
 
