@@ -2,9 +2,9 @@ dependencies:
 - name: keycloak
   repository: https://charts.bitnami.com/bitnami
   version: 18.4.0
-- name: contour
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.5.2
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.10.0
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.14.3
@@ -41,5 +41,5 @@ dependencies:
 - name: plane-ce
   repository: https://helm.plane.so
   version: 1.0.11
-digest: sha256:2cb996e9f3548e9930e10b1ec259dd4ed75629492af0f466e579538aad1b3d7c
-generated: "2024-03-10T19:10:54.292242315-03:00"
+digest: sha256:4094a2abec16ac6dfa2b2fbad248a8b3a3d1b1aa0962c65ff6e23dd7faec4ad8
+generated: "2024-03-14T13:57:41.834493615-03:00"

@@ -10,6 +10,16 @@ domain: localhost
 cert-manager:
   enabled: false
 
+ingress-nginx:
+  controller:
+    metrics:
+      enabled: true
+
+      service:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "10254"
+
 ###############################################################
 # DATABASES
 ###############################################################
@@ -192,7 +202,7 @@ grafana:
 # TOOLS
 ###############################################################
 kimai2:
-  enabled: false
+  enabled: true
 
   # TODO: use secret for root user
   kimaiAdminEmail: admin
@@ -204,6 +214,7 @@ kimai2:
   mariadb:
     enabled: false
 
+  # TODO: use secrets for DB credentials
   externalDatabase:
     host: osss-mariadb
     port: 3306

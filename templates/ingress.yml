@@ -1,11 +1,29 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: osss-ingress
+  name: osss-ingress-main
   annotations:
-    projectcontour.io/websocket-routes: /socket.io,/api
+    nginx.ingress.kubernetes.io/app-root: /realms/osss/account
 spec:
-  ingressClassName: contour
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-keycloak
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: osss-ingress
+spec:
+  ingressClassName: nginx
   rules:
     - host: keycloak.{{ .Values.domain }}
       http:
