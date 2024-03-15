@@ -1,0 +1,71 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Main dashboard used as home page",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P1809F7CD0C75ACF3"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 21,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "# Open stack for startups\n\nGrafana is used to monitor your tools.\n\nIt is configured to use loki and prometheus as its data sources and have some preconfigured dsahboards to provide insights of the health of your system.\n\nIf you need help feel free to contact us at [renais.io](https://www.renaiss.io/).",
+        "mode": "markdown"
+      },
+      "pluginVersion": "10.3.1",
+      "transparent": true,
+      "type": "text"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 39,
+  "tags": ["osss", "Main"],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2024-03-14T15:42:10.849Z",
+    "to": "2024-03-15T03:42:10.849Z"
+  },
+  "timepicker": {
+    "hidden": true
+  },
+  "timezone": "",
+  "title": "Main",
+  "uid": "main",
+  "version": 1,
+  "weekStart": ""
+}

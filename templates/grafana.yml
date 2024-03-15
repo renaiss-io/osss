@@ -9,6 +9,8 @@ data: # TODO: make this iterate over json in grafana folder
 {{ .Files.Get "grafana/dashboard_postgresql.json" | indent 4 }}
   dashboard_mysql.json: |
 {{ .Files.Get "grafana/dashboard_mysql.json" | indent 4 }}
+  dashboard_main.json: |
+{{ .Files.Get "grafana/dashboard_main.json" | indent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap

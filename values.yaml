@@ -179,9 +179,8 @@ grafana:
     server:
       root_url: "http://grafana.{{ .Values.global.domain }}"
 
-    # TODO: change default dashboard
-    # dashboards:
-    #   default_home_dashboard_path:
+    dashboards:
+      default_home_dashboard_path: /tmp/dashboards/dashboard_main.json
 
     # TODO: use secrets for sensible parameters
     auth.generic_oauth:
