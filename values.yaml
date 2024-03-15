@@ -327,7 +327,7 @@ planka:
 
     clientId: planka
     clientSecret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZy2
-    issuerUrl: http://osss-keycloak/realms/osss
+    issuerUrl: http://keycloak.{{ .Values.global.domain }}/realms/osss
 
 # TODO: configure plane-ce
 plane-ce:

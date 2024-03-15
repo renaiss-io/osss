@@ -119,6 +119,7 @@ clients:
   clientAuthenticatorType: client-secret
   redirectUris:
   - http://planka.{{ .Values.global.domain }}
+  - http://planka.{{ .Values.global.domain }}/*
   webOrigins:
   - http://planka.{{ .Values.global.domain }}
   standardFlowEnabled: true
