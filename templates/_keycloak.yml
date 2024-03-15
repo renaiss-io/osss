@@ -184,9 +184,9 @@ clients:
     protocolMapper: saml-role-list-mapper
     consentRequired: false
     config:
-      single: 'false'
+      single: 'true'
       attribute.nameformat: Basic
-      attribute.name: Role
+      attribute.name: Roles
   - id: e6082cc0-346a-43d4-ab9e-4b7f69623c57
     name: X500 surname
     protocol: saml
