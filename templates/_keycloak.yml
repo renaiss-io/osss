@@ -78,8 +78,7 @@ clients:
   secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
   description: SSO for grafana
   rootUrl: http://grafana.{{ .Values.global.domain }}
-  adminUrl: http://grafana.{{ .Values.global.domain }}
-  baseUrl: http://grafana.{{ .Values.global.domain }}
+  baseUrl: http://grafana.{{ .Values.global.domain }}/login/generic_oauth
   enabled: true
   alwaysDisplayInConsole: true
   clientAuthenticatorType: client-secret
