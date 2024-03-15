@@ -10,6 +10,7 @@ data:
   username: {{ .Values.postgresql.auth.username | b64enc }}
   password: {{ .Values.postgresql.auth.password | b64enc }}
 ---
+{{- if .Values.planka.enabled }}
 apiVersion: v1
 kind: Secret
 type: Opaque
@@ -20,6 +21,7 @@ metadata:
 data:
   uri: {{ "postgresql://testuser:testpassword@osss-postgresql:5432/planka" | b64enc }}
 ---
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

@@ -26,3 +26,10 @@ This repository contains the required artifacts to enable an easy and opinionate
 - `Loki`: used to store logs from the system.
 - `Prometheus`: used to collect and store metrics from the system.
 - `Promtail`: used to collect logs from the system.
+
+# Develop
+
+In order to develop, there are some system configuration to implement:
+
+- Local cluster: a local k8s cluster using for example `minikube`.
+- Local fake domain: a fake domain used to redirect to our cluster (default is `test.local`)

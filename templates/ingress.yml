@@ -3,11 +3,11 @@ kind: Ingress
 metadata:
   name: osss-ingress-main
   annotations:
-    nginx.ingress.kubernetes.io/app-root: /realms/osss/account
+    nginx.ingress.kubernetes.io/permanent-redirect: http://keycloak.{{ .Values.global.domain }}/realms/osss/account
 spec:
   ingressClassName: nginx
   rules:
-    - host: {{ .Values.domain }}
+    - host: {{ .Values.global.domain }}
       http:
         paths:
           - path: /
@@ -22,10 +22,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: osss-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
-    - host: keycloak.{{ .Values.domain }}
+    - host: keycloak.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
@@ -36,7 +38,7 @@ spec:
                 port:
                   number: 80
     {{- if .Values.grafana.enabled }}
-    - host: grafana.{{ .Values.domain }}
+    - host: grafana.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
@@ -46,16 +48,9 @@ spec:
                 name: {{ .Release.Name }}-grafana
                 port:
                   number: 80
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Release.Name }}-grafana
-                port:
-                  number: 80
     {{- end }}
     {{- if .Values.openproject.enabled }}
-    - host: openproject.{{ .Values.domain }}
+    - host: openproject.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
@@ -67,7 +62,7 @@ spec:
                   number: 8080
     {{- end }}
     {{- if .Values.kimai2.enabled }}
-    - host: kimai.{{ .Values.domain }}
+    - host: kimai.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
@@ -79,7 +74,7 @@ spec:
                   number: 80
     {{- end }}
     {{- if .Values.wiki.enabled }}
-    - host: wiki.{{ .Values.domain }}
+    - host: wiki.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
@@ -91,18 +86,10 @@ spec:
                   number: 80
     {{- end }}
     {{- if .Values.planka.enabled }}
-    - host: planka.{{ .Values.domain }}
+    - host: planka.{{ .Values.global.domain }}
       http:
         paths:
           - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Release.Name }}-planka
-                port:
-                  number: 1337
-          # Enable ws, required by planka
-          - path: /socket.io
             pathType: Prefix
             backend:
               service:

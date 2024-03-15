@@ -65,7 +65,7 @@ spec:
                   key: uri
             - name: BASE_URL
               {{- if .Values.baseUrl }}
-              value: {{ .Values.baseUrl }}
+              value: {{ tpl .Values.baseUrl . }}
               {{- else if .Values.ingress.enabled }}
               value: {{ printf "https://%s" (first .Values.ingress.hosts).host }}
               {{- else }}
@@ -100,7 +100,7 @@ spec:
                   key:  clientSecret
                   name: {{ $secretName }}
             - name: OIDC_ISSUER
-              value: {{ required "issuerUrl is required when configuring OIDC" .Values.oidc.issuerUrl | quote }}
+              value: {{ required "issuerUrl is required when configuring OIDC" (tpl .Values.oidc.issuerUrl .) | quote }}
             - name: OIDC_SCOPES
               value: {{ join " " .Values.oidc.scopes | default "openid profile email" | quote }}
           {{- if .Values.oidc.admin.roles }}

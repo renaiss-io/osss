@@ -2,9 +2,9 @@
 {{- define "kimai.yml" -}}
 kimai:
   saml:
-    provider: Keycloak
+    provider: keycloak
     activate: true
-    title: Keycloak
+    title: Login with keycloak
     mapping:
         - { saml: $Email, kimai: email }
         - { saml: $FirstName $LastName, kimai: alias }
@@ -16,18 +16,18 @@ kimai:
             - { saml: Management, kimai: ROLE_TEAMLEAD }
     connection:
         idp:
-            entityId: 'http://keycloak.localhost/auth/realms/osss'
+            entityId: 'http://keycloak.{{ .Values.global.domain }}/realms/osss'
             singleSignOnService:
-                url: 'http://keycloak.localhost/auth/realms/osss/protocol/saml'
+                url: 'http://keycloak.{{ .Values.global.domain }}/realms/osss/protocol/saml'
                 binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
-            x509cert: 'MIIClzCCAX8CBgGN7C1aqDANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARvc3NzMB4XDTI0MDIyNzIwMDUxMVoXDTM0MDIyNzIwMDY1MVowDzENMAsGA1UEAwwEb3NzczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANeDeVxFtbD8gBMN1SUCgEGeWzAhnQu8nnH0j4ZFYlDqtFV1oIILyhsAwDbd8i/oesHov3fV1RDXWUS5rO+oZjiYxSuDP/QOBuRB82q6yY2rgAYcpjMrIbVwBU+dTh621pWuVsaFQxWcs8PNUHqgO330M1zFJzmfNNcpGERAxlNZqN0xU4ytEvjvKyKJ8ks8CIu+St5SxcpROKxP1kpgzMszc0H88KoxUqzuV2E2w+xZ8oyoKT9LgpZh+CP1CpU2U8S08B9zlFxobsJTrznGqkAWNG/hGbjUD6hGet+bxw2CMcamnpsQB0V74RCeiINo7M7yIwOe9e8rb+J1r3YwP/MCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAVwjauKEpfVecLFgKcVLHhK4kA7Wvn21iwaDjIppMD7AonB06eTZLs4QqEY5Ig/cH5HkI1wN5XkLJrhDYyoQtnlPsLFck8Tlo6+yWv02q22+sQoeKu1o+fTIPJJYZ3p/bvGGYCttnm3kxF8UctuCSF/pmQOMmJWZVjRRtx7moGA++x7oFLO+hdesQe2ADaoe4fYxdA9nLhhQd8IMbVYsL4DlCKKbZ7b+2OvlidMa50xxApI2HG1TZS5L7Gtp9zUSclxTsAu3Dx9S7wl04J548BAvOg87AuwSUCIciTbo/xZrTV0aeTCwJ+3llQT0Zi3hn5VQGxwS3UjaaI7R0Wos1ww=='
+            x509cert: 'MIIClzCCAX8CBgGOKO44SjANBgkqhkiG9w0BAQsFADAPMQ0wCwYDVQQDDARvc3NzMB4XDTI0MDMxMDE1MTMwNFoXDTM0MDMxMDE1MTQ0NFowDzENMAsGA1UEAwwEb3NzczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAIpUoDq3C3CQRCNAy26kMJP7UkAL9P6fFHEYPdFg+zFxVMSezJCk0kZH/pLil3gURTECqQywZ+aks746hAxSquUJZ4WldgSbUbnhiizTvu0eb/94IcY/eUTmUzn2CgrMO1UMrOupoaFht7fhs0z42KmAHj24Goe9FdaWM/H1Yd5r8AeA0NrKYSo4oUkLdBo+Hv8w1JMkOoRtXPMJC6ewQ0mZ0XVM2U5g49wlC4E4PuacKMoytSx28qXh8jzKJmHoEhhNAGARZ7iTGtzBp9soaioI0+Stbqx3+ZSnx0ym1lHJzhokaQErSREKGpPjPfFPopQbQ5QXcJQmjvVDS3otU5ECAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAhoDRyxiv5kkqSkuasKA9Gnot7UkKRK2FoPTyxZEFAVffUwsG8Hi3moS6rpmn94X0kZZsbA9bE5FIUJ9A1X8Q3Kb/V0btfgAeFVn9nC9pJEXJgAPaIxXbqTtrqosDM4b/Et27GyrS1kSZH+IEcf8G/Qkuhd9Dqz+6FzP8VRwO5WTPseUNJxkEmp8bsf5xQiBjF6UbxMGC3QVX1JDq7hJtLj9cCbUAEA24SFNmWx0sp6GBntvUT7tdju61QGwBomMVjxltQ367BoCrfotythqKc0Hx402qy3nzqmDk7fQEploFC1R9w67BzZJdc1IFM0lPE3I53FUf7cPgTWGvhToJNQ=='
         sp:
-            entityId: 'Kimai2'
+            entityId: 'kimai'
             assertionConsumerService:
-                url: 'http://kimai.localhost/auth/saml/acs'
+                url: 'http://kimai.{{ .Values.global.domain }}/auth/saml/acs'
                 binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
             singleLogoutService:
-                url: 'http://kimai.localhost/auth/saml/logout'
+                url: 'http://kimai.{{ .Values.global.domain }}/auth/saml/logout'
                 binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
         strict: true
         debug: true

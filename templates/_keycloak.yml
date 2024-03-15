@@ -1,4 +1,4 @@
-{{- define "osss.yml" -}}
+{{- define "realm.yml" -}}
 ---
 id: osss
 realm: osss
@@ -59,7 +59,7 @@ components:
       - RSA-OAEP
 users:
 - id: test
-  email: test@example.com
+  email: test@{{ .Values.global.domain }}
   firstName: Test
   lastName: Test
   username: test
@@ -77,16 +77,16 @@ clients:
   clientId: grafana
   secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
   description: SSO for grafana
-  rootUrl: http://grafana.localhost
-  adminUrl: http://grafana.localhost
-  baseUrl: http://grafana.localhost
+  rootUrl: http://grafana.{{ .Values.global.domain }}
+  adminUrl: http://grafana.{{ .Values.global.domain }}
+  baseUrl: http://grafana.{{ .Values.global.domain }}
   enabled: true
   alwaysDisplayInConsole: true
   clientAuthenticatorType: client-secret
   redirectUris:
-  - http://grafana.localhost/login/generic_oauth
+  - http://grafana.{{ .Values.global.domain }}/login/generic_oauth
   webOrigins:
-  - http://grafana.localhost
+  - http://grafana.{{ .Values.global.domain }}
   standardFlowEnabled: true
   implicitFlowEnabled: false
   directAccessGrantsEnabled: true
@@ -112,15 +112,15 @@ clients:
   clientId: planka
   secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZy2
   description: SSO for planka
-  rootUrl: http://planka.localhost
-  adminUrl: http://planka.localhost
-  baseUrl: http://planka.localhost
+  rootUrl: http://planka.{{ .Values.global.domain }}
+  adminUrl: http://planka.{{ .Values.global.domain }}
+  baseUrl: http://planka.{{ .Values.global.domain }}
   enabled: true
   clientAuthenticatorType: client-secret
   redirectUris:
-  - http://planka.localhost
+  - http://planka.{{ .Values.global.domain }}
   webOrigins:
-  - http://planka.localhost
+  - http://planka.{{ .Values.global.domain }}
   standardFlowEnabled: true
   implicitFlowEnabled: false
   alwaysDisplayInConsole: true
@@ -146,21 +146,21 @@ clients:
   clientId: kimai
   name: Kimai
   description: SSO for Kimai
-  rootUrl: http://kimai.localhost
-  baseUrl: http://kimai.localhost
+  rootUrl: http://kimai.{{ .Values.global.domain }}
+  baseUrl: http://kimai.{{ .Values.global.domain }}
   enabled: true
   clientAuthenticatorType: client-secret
   alwaysDisplayInConsole: true
   redirectUris:
-  - http://kimai.localhost/*
+  - http://kimai.{{ .Values.global.domain }}/*
   webOrigins:
-  - http://kimai.localhost
+  - http://kimai.{{ .Values.global.domain }}
   protocol: saml
   attributes:
     saml.assertion.signature: 'false'
     saml.force.post.binding: 'true'
     saml.encrypt: 'false'
-    post.logout.redirect.uris: http://kimai.localhost/*
+    post.logout.redirect.uris: http://kimai.{{ .Values.global.domain }}/*
     saml.server.signature: 'true'
     saml.server.signature.keyinfo.ext: 'false'
     saml.signing.certificate: MIICmTCCAYECBgGN7C3PrjANBgkqhkiG9w0BAQsFADAQMQ4wDAYDVQQDDAVraW1haTAeFw0yNDAyMjcyMDA1NDFaFw0zNDAyMjcyMDA3MjFaMBAxDjAMBgNVBAMMBWtpbWFpMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1ecKB9puGViqOAKqdqTRZBjuNaCJqYJuCX1rTUG3J55HoezkkDNklJ55Em5JmEQTt0gETqFY+85D5JksgFTE8VQqmJYqqXkokL2SzotBGR20mnwk4rnzUWDRJ/ALy7Ogv/yP+YktlCDkt3ux+pwm0ZfMhM3LiAYQndbby+hY7RLa88WqyRMg5yxX8EVAiOBiAbdrPxiTv2UtGDffTpwYY07X3oV9NQ+YFwXdQR3VL6NLyj2ArcCYBXPeyCouolsM1m2qlwX8FsTSa3Tqi6m29IzVrvh+Yo2d1ySidOcr0gMGjCWXS/RNr2iirTjRVwWSb+LV6vPiPEc84pbohETi8QIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAqQsHbcUpDWnd5+dyni9U9ipSvWgGjvwk3lJvctmsybHIXQVOUMIxvZMOBNn1lKfsLOXmncKtpJSzv0gvY8r3q4rGi8y+0mcExYH6DUCYXRzjOQP+R7H6l59Q1wWDfb/sm4UAWRFZ8WHrJNv7tjHMizSi+lHCfnn8ZG215tGbPhY8352+9UyssLw1PiAx7Ix9AohyPtq2+nbINheQxYyz1IWtawYJOe7msWFr5zX/fB/Gcy59INK5O70r3+ItVrF0pRRSM53sf6V9e35SQ60EfrOQRjTgFC7YWY4GpzeOkjAvtDhfJ7P73nDDJmf4joE8kgneMqzZom97LLaxjpB4Z
@@ -171,7 +171,7 @@ clients:
     saml.client.signature: 'false'
     saml.authnstatement: 'true'
     display.on.consent.screen: 'false'
-    saml_name_id_format: username
+    saml_name_id_format: email
     saml.signing.private.key: MIIEowIBAAKCAQEA1ecKB9puGViqOAKqdqTRZBjuNaCJqYJuCX1rTUG3J55HoezkkDNklJ55Em5JmEQTt0gETqFY+85D5JksgFTE8VQqmJYqqXkokL2SzotBGR20mnwk4rnzUWDRJ/ALy7Ogv/yP+YktlCDkt3ux+pwm0ZfMhM3LiAYQndbby+hY7RLa88WqyRMg5yxX8EVAiOBiAbdrPxiTv2UtGDffTpwYY07X3oV9NQ+YFwXdQR3VL6NLyj2ArcCYBXPeyCouolsM1m2qlwX8FsTSa3Tqi6m29IzVrvh+Yo2d1ySidOcr0gMGjCWXS/RNr2iirTjRVwWSb+LV6vPiPEc84pbohETi8QIDAQABAoIBABm9GVnkkMcAAkuHFpf8MS4ISfGuBaKeDTubGeRL+gwMYbY8WSx44qt3fj4Xg0eNOYoeYlZL1/dE1KqXO+GdUa1wYUfHGg8WgykXhqjP3N920ZqdQZr+oSazrbdOjTzPupIfg/uU5CUk6CCkA8CSNaGW0IdSdCFECY/UoNIifUDZgZq7yaAwlVsJzvdqfvNibyfZRDc53livHRqmW+jxlq6lT8E1ilEiRsSZhy0aOz6rwyvTofc6hoteFunYibgZ5Z/+xGCBZOMeeiC4kOMVdy9tBhzJJlmLdiNQpirh1qdKIeRHUoUH3cnwZntuBKbg80wCSpJJqWs3EDNnDSL5viECgYEA9R6zVri88fQelgz6DnCLXHbWT5p/zcYkeg/8g011sfUF2FwT2ACdkwmB9+MN8TG6B/xM+unrV/4JETFEIx0RYO1w2Ip6qFf2uZgGQvyyvgHPeXlpNMD2IY7Sol3iTpoGNhyY7pwBnZyNDOJ493V6W4GckDWASyJzQr208gPJ6i0CgYEA32WdYu6y2K0Xblq1ZsDVOzn4BkQ+vGllY5JHve8ul8QubkFILGwRJ5CGTjN9ibdvRotuGDVOaGp48plRk0Iq5+eL502bUYVujTKnq+t4v8j8auN0DA9BqijOWU/1TBMFBXddsS5YRON0y32aIH2SamKiQKA2opBuQiGH5OgB6lUCgYABSV/3nJChVH60muzVFpIkshr93/m7wsZ+PYc9yTJM9NRLBnC0OYyaMPqVqoNwOKqZUCG3T3MEyziQ9ok9BfIJaDWnbVKnf46z+rBNubXWeXv1T0XWGQ0xr+Y7I/MEJprRveSvm/IGOcQjxSyNX/h8cnm36A/8VPn157kDbDGrIQKBgQCvQzFu5IY7p9CyK0gWDUM87AXCJNhzSNzaeXD/eh67wpYKufy9nSr4N1KnF45t9RO/7LO7GlchZCbvbYmqVkcDGY2RMjmgg2ZwMEWLg3mAPVaLJVdt/qotrUX2m9x+io1t9G/1Cb8GjMycuTWqN9oezLMusIMsltNp3pSW6c5W4QKBgFxIpkKLU3x2BRVXzqinT5Ns7waoyhn6rtndVKyGI9ihkHQWdi7uQMSpqKyPUpRQ1ia9V6iGmzrygRLllvEGFm+2df1xAuqqhuY+yufJoETwxPASE+Z/NuQwywY3oG2smE7RvesjyDbTG304VUOWeuioUOzcq4vnd2zWCeF2H5Fe
     saml.allow.ecp.flow: 'false'
     saml_signature_canonicalization_method: http://www.w3.org/2001/10/xml-exc-c14n#

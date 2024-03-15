@@ -1,7 +1,8 @@
 ###############################################################
 # BASE VARIABLES
 ###############################################################
-domain: localhost
+global:
+  domain: test.local
 
 ###############################################################
 # NETWORK
@@ -176,7 +177,7 @@ grafana:
   # Configure SSO with keycloak
   grafana.ini:
     server:
-      root_url: http://grafana.localhost
+      root_url: "http://grafana.{{ .Values.global.domain }}"
 
     # TODO: change default dashboard
     # dashboards:
@@ -193,7 +194,7 @@ grafana:
       email_attribute_path: email
       login_attribute_path: username
       name_attribute_path: full_name
-      auth_url: http://keycloak.localhost/realms/osss/protocol/openid-connect/auth
+      auth_url: "http://keycloak.{{ .Values.global.domain }}/realms/osss/protocol/openid-connect/auth"
       token_url: http://osss-keycloak/realms/osss/protocol/openid-connect/token
       api_url: http://osss-keycloak/realms/osss/protocol/openid-connect/userinfo
       role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
@@ -205,8 +206,14 @@ kimai2:
   enabled: true
 
   # TODO: use secret for root user
-  kimaiAdminEmail: admin
-  kimaiAdminPassword: admin
+  kimaiAdminEmail: admin@example.com
+  kimaiAdminPassword: adminadmin
+
+  service:
+    type: ClusterIP
+
+  ingress:
+    hostname: kimai.test.local
 
   configurationFromSecret:
     enabled: true
@@ -296,14 +303,14 @@ wiki:
     existingSecretKey: password
 
 planka:
-  enabled: true
+  enabled: false
 
   admin_email: admin
   admin_password: admin
   admin_username: admin
   admin_name: admin
 
-  baseUrl: http://planka.localhost
+  baseUrl: "http://planka.{{ .Values.global.domain }}"
   secretkey: 4dab9dc2d9011d9114b9a96e531926598adad75c70b41e78311bf96097d327812c191091852b9a7ed90e56058b4ee52ba2398ba54398f7bc9c7827785cc3a342
 
   postgresql:
