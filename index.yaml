@@ -1,0 +1,571 @@
+apiVersion: v1
+entries:
+  cert-manager:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/signKey: |
+        fingerprint: 1020CF3C033D4F35BAE1C19E1226061C665DF13E
+        url: https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
+    apiVersion: v1
+    appVersion: v1.14.3
+    created: "2024-03-18T17:29:23.248498746-03:00"
+    description: A Helm chart for cert-manager
+    digest: 3126d0253ec8b0456e0db924cc3e71b24e51f1e66914218ca39ebb606aff0438
+    home: https://github.com/cert-manager/cert-manager
+    icon: https://raw.githubusercontent.com/cert-manager/cert-manager/d53c0b9270f8cd90d908460d69502694e1838f5f/logo/logo-small.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    kubeVersion: '>= 1.22.0-0'
+    maintainers:
+    - email: cert-manager-maintainers@googlegroups.com
+      name: cert-manager-maintainers
+      url: https://cert-manager.io
+    name: cert-manager
+    sources:
+    - https://github.com/cert-manager/cert-manager
+    urls:
+    - https://renaiss-io.github.io/osss/charts/cert-manager-v1.14.3.tgz
+    version: v1.14.3
+  grafana:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/grafana/helm-charts
+        - name: Upstream Project
+          url: https://github.com/grafana/grafana
+    apiVersion: v2
+    appVersion: 10.3.1
+    created: "2024-03-18T17:29:23.250609664-03:00"
+    description: The leading tool for querying and visualizing time series and metrics.
+    digest: f3b6df391b12a93de8c9f719f5e6531647ddb9f9f106fccbe6408a09f8515b38
+    home: https://grafana.com
+    icon: https://artifacthub.io/image/b4fed1a7-6c8f-4945-b99d-096efa3e4116
+    keywords:
+    - monitoring
+    - metric
+    kubeVersion: ^1.8.0-0
+    maintainers:
+    - email: zanhsieh@gmail.com
+      name: zanhsieh
+    - email: rluckie@cisco.com
+      name: rtluckie
+    - email: maor.friedman@redhat.com
+      name: maorfr
+    - email: miroslav.hadzhiev@gmail.com
+      name: Xtigyro
+    - email: mail@torstenwalter.de
+      name: torstenwalter
+    name: grafana
+    sources:
+    - https://github.com/grafana/grafana
+    - https://github.com/grafana/helm-charts
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/grafana-7.3.0.tgz
+    version: 7.3.0
+  ingress-nginx:
+  - annotations:
+      artifacthub.io/changes: '- "Update Ingress-Nginx version controller-v1.10.0"'
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.10.0
+    created: "2024-03-18T17:29:23.252984984-03:00"
+    description: Ingress controller for Kubernetes using NGINX as a reverse proxy
+      and load balancer
+    digest: 74f6590786bee20295bbe76f914514d9a111d7e9317acf13d26de482ae8abc1a
+    home: https://github.com/kubernetes/ingress-nginx
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
+    keywords:
+    - ingress
+    - nginx
+    kubeVersion: '>=1.20.0-0'
+    maintainers:
+    - name: rikatz
+    - name: strongjz
+    - name: tao12345666333
+    name: ingress-nginx
+    sources:
+    - https://github.com/kubernetes/ingress-nginx
+    urls:
+    - https://renaiss-io.github.io/osss/charts/ingress-nginx-4.10.0.tgz
+    version: 4.10.0
+  keycloak:
+  - annotations:
+      category: DeveloperTools
+      images: |
+        - name: keycloak-config-cli
+          image: docker.io/bitnami/keycloak-config-cli:5.10.0-debian-11-r4
+        - name: keycloak
+          image: docker.io/bitnami/keycloak:23.0.6-debian-11-r0
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 23.0.6
+    created: "2024-03-18T17:29:23.25885838-03:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Keycloak is a high performance Java-based identity and access management
+      solution. It lets developers add an authentication layer to their applications
+      with minimum effort.
+    digest: 25358c8eeed4af331fd7dcb9f63f4dcd521ecdad24c84ae5ed84925c851cab2f
+    home: https://bitnami.com
+    icon: https://bitnami.com/assets/stacks/keycloak/img/keycloak-stack-220x234.png
+    keywords:
+    - keycloak
+    - access-management
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: keycloak
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/keycloak
+    urls:
+    - https://renaiss-io.github.io/osss/charts/keycloak-18.4.0.tgz
+    version: 18.4.0
+  kimai2:
+  - apiVersion: v2
+    appVersion: apache-2.11.0-prod
+    created: "2024-03-18T17:29:23.263396417-03:00"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 11.x.x
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: 412743435fda064cadb298ddbdb2c74444aa5db3ba2cd124d8385683188f5854
+    name: kimai2
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/kimai2-3.1.11.tgz
+    version: 3.1.11
+  loki:
+  - apiVersion: v2
+    appVersion: 2.9.4
+    created: "2024-03-18T17:29:23.27021089-03:00"
+    dependencies:
+    - alias: minio
+      condition: minio.enabled
+      name: minio
+      repository: https://charts.min.io/
+      version: 4.0.15
+    - alias: grafana-agent-operator
+      condition: monitoring.selfMonitoring.grafanaAgent.installOperator
+      name: grafana-agent-operator
+      repository: https://grafana.github.io/helm-charts
+      version: 0.3.15
+    description: Helm chart for Grafana Loki in simple, scalable mode
+    digest: 5ed59d1cb4f78a9157e11a48fb9d7e04b01f7ca7fa34811639b072b5dd3ea7c2
+    home: https://grafana.github.io/helm-charts
+    icon: https://grafana.com/docs/loki/latest/logo_and_name.png
+    maintainers:
+    - name: trevorwhitney
+    - name: jeschkies
+    name: loki
+    sources:
+    - https://github.com/grafana/loki
+    - https://grafana.com/oss/loki/
+    - https://grafana.com/docs/loki/latest/
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/loki-5.43.6.tgz
+    version: 5.43.6
+  mariadb:
+  - annotations:
+      category: Database
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 10.6.12
+    created: "2024-03-18T17:29:23.272150022-03:00"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: MariaDB is an open source, community-developed SQL database server
+      that is widely in use around the world due to its enterprise features, flexibility,
+      and collaboration with leading tech firms.
+    digest: 7b465fbc11e3511c48fdd42904a9acd3444203064bbc34d985d79f7d025ac8bb
+    home: https://github.com/bitnami/charts/tree/main/bitnami/mariadb
+    icon: https://bitnami.com/assets/stacks/mariadb/img/mariadb-stack-220x234.png
+    keywords:
+    - mariadb
+    - mysql
+    - database
+    - sql
+    - prometheus
+    maintainers:
+    - name: Bitnami
+      url: https://github.com/bitnami/charts
+    name: mariadb
+    sources:
+    - https://github.com/bitnami/containers/tree/main/bitnami/mariadb
+    - https://github.com/prometheus/mysqld_exporter
+    - https://mariadb.org
+    urls:
+    - https://renaiss-io.github.io/osss/charts/mariadb-11.5.7.tgz
+    version: 11.5.7
+  odoo:
+  - annotations:
+      category: CRM
+      images: |
+        - name: odoo
+          image: docker.io/bitnami/odoo:17.0.20240305-debian-12-r0
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 17.0.20240305
+    created: "2024-03-18T17:29:23.276158672-03:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.x.x
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Odoo is an open source ERP and CRM platform, formerly known as OpenERP,
+      that can connect a wide variety of business operations such as sales, supply
+      chain, finance, and project management.
+    digest: 38e5298b3f14ec8450b9083accf268e3abd4806bcf60220582a0962ad3358952
+    home: https://bitnami.com
+    icon: https://bitnami.com/assets/stacks/odoo/img/odoo-stack-220x234.png
+    keywords:
+    - odoo
+    - crm
+    - www
+    - http
+    - web
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: odoo
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/odoo
+    urls:
+    - https://renaiss-io.github.io/osss/charts/odoo-25.6.0.tgz
+    version: 25.6.0
+  open-source-stack-for-startups:
+  - apiVersion: v2
+    created: "2024-03-18T17:29:23.246000399-03:00"
+    dependencies:
+    - name: keycloak
+      repository: https://charts.bitnami.com/bitnami
+      version: 18.4.0
+    - name: ingress-nginx
+      repository: https://kubernetes.github.io/ingress-nginx
+      version: 4.10.0
+    - condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.14.3
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.4.4
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.5.7
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 25.13.0
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 7.3.0
+    - condition: loki.enabled
+      name: loki
+      repository: https://grafana.github.io/helm-charts
+      version: 5.43.6
+    - condition: promtail.enabled
+      name: promtail
+      repository: https://grafana.github.io/helm-charts
+      version: 6.15.5
+    - condition: kimai2.enabled
+      name: kimai2
+      repository: https://robjuz.github.io/helm-charts
+      version: 3.1.11
+    - condition: openproject.enabled
+      name: openproject
+      repository: https://charts.openproject.org
+      version: 4.5.0
+    - condition: wiki.enabled
+      name: wiki
+      repository: https://charts.js.wiki
+      version: 2.2.0
+    - condition: planka.enabled
+      name: planka
+      repository: file://./planka
+      version: 0.1.17
+    - condition: plane-ce.enabled
+      name: plane-ce
+      repository: https://helm.plane.so
+      version: 1.0.11
+    - condition: odoo.enabled
+      name: odoo
+      repository: https://charts.bitnami.com/bitnami
+      version: 25.6.0
+    digest: 6baca134534522d36a2c0aa8ced437bf8007b873a3ec4d235bb5e1f3c8ab9ae3
+    icon: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZ5JREFUeNrsV8FtwzAMTIIOoBHcR/8awZnAzQS2P10n/34STRBngniE/PuoR/AGLZnQgCqoFCm76CcCCAsOxTtTCo9arR7jn8ea+/Hr/aOERw1WgOF8IHNg3frtZSQ/A48GrCJftCuZA79eRYACHsBeGX4I3tIcfQ3j26HvRJglQOAXMLtwtjEb25DEJuJ4EIJjoB0GpXlqWIr9ewZozy9CcPyaK62ztM4I1m79MxFmoNaC377iPpdmoua2oNCCZ5AoOAJlDriSRMkRGHLBFSQGLQExuJAES+A8F1xA4swROHoLssEZEiNhxAlQlZrKazsHPCDhx0xWQj/9Sw0jEiPSgU9aMHsLIlUSYz77WQgz0Hhsb6JEAZYAn2I23BZUkdRlkWD0odKWYjWJhDgVOVogJiFQRpZAnzjJLAmhLPc5WpAkoegJ2FLshP/pHySUDYlL9YSnRDMaNqUIuheCYye98188RZxaOihWkImTsiltw5ebSO0eSUA6RVOaOjtdrCPWXEws2XQxQUk9+gHBd7qYmOCr3RKi9hh/Nr4FGACzvcNREXU72gAAAABJRU5ErkJggg==
+    name: open-source-stack-for-startups
+    urls:
+    - https://renaiss-io.github.io/osss/open-source-stack-for-startups-1.0.0.tgz
+    version: 1.0.0
+  openproject:
+  - annotations:
+      artifacthub.io/license: GPL-3.0-only
+      artifacthub.io/links: |
+        - name: Homepage
+          url: https://www.openproject.org/
+        - name: OpenProject Community
+          url: https://community.openproject.org
+        - name: support
+          url: https://www.openproject.org/docs/development/report-a-bug/
+      artifacthub.io/signKey: |
+        fingerprint: CB1CA0488A75B7471EA1B087CF56DD6A0AE260E5
+        url: https://keys.openpgp.org/vks/v1/by-fingerprint/CB1CA0488A75B7471EA1B087CF56DD6A0AE260E5
+    apiVersion: v2
+    appVersion: "13"
+    created: "2024-03-18T17:29:23.281896835-03:00"
+    dependencies:
+    - condition: postgresql.bundled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ^12.1.6
+    - condition: memcached.bundled
+      name: memcached
+      repository: https://charts.bitnami.com/bitnami
+      version: ^6.3.2
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: ^2.2.2
+    description: A Helm chart for running OpenProject via Kubernetes
+    digest: 0687cfb36f5b2b10aaaf46764272f32ea5125e04de7ab62c3cd90d8ff3c653df
+    home: https://www.openproject.org/
+    icon: https://charts.openproject.org/logo.svg
+    maintainers:
+    - name: OpenProject
+      url: https://github.com/opf/helm-charts
+    name: openproject
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/openproject-4.5.0.tgz
+    version: 4.5.0
+  plane-ce:
+  - annotations:
+      artifacthub.io/license: AGPL-3.0
+    apiVersion: v2
+    appVersion: 0.15.0
+    created: "2024-03-18T17:29:23.285185191-03:00"
+    dependencies:
+    - alias: cert-manager
+      condition: cert-manager.enabled
+      name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.13.2
+    description: Meet Plane. An open-source software development tool to manage issues,
+      sprints, and product roadmaps with peace of mind.
+    digest: 1f20593ad08a2ae38f82e6dcebafee87a973fabe3ba731133240145f43cbf09d
+    home: https://plane.so
+    icon: https://plane.so/favicon/favicon-32x32.png
+    name: plane-ce
+    sources:
+    - https://github.com/makeplane/plane
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/plane-ce-1.0.11.tgz
+    version: 1.0.11
+  planka:
+  - apiVersion: v2
+    appVersion: 1.15.6
+    created: "2024-03-18T17:29:23.285548016-03:00"
+    dependencies:
+    - alias: postgresql
+      condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.5.1
+    description: A Helm chart to deploy Planka and it's dependencies.
+    digest: d13d53beedee776eab1a06a602923b169c60f67c52274484d1a4e57f96a5c58b
+    name: planka
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/planka-0.1.17.tgz
+    version: 0.1.17
+  postgresql:
+  - annotations:
+      category: Database
+      images: |
+        - name: os-shell
+          image: docker.io/bitnami/os-shell:11-debian-11-r95
+        - name: postgres-exporter
+          image: docker.io/bitnami/postgres-exporter:0.15.0-debian-11-r7
+        - name: postgresql
+          image: docker.io/bitnami/postgresql:16.1.0-debian-11-r25
+      licenses: Apache-2.0
+    apiVersion: v2
+    appVersion: 16.1.0
+    created: "2024-03-18T17:29:23.28791821-03:00"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: PostgreSQL (Postgres) is an open source object-relational database
+      known for reliability and data integrity. ACID-compliant, it supports foreign
+      keys, joins, views, triggers and stored procedures.
+    digest: 690b0b387f93a9c4b3be740eeb18bc458966fbaeb1b471dbf140a04bec0ee7dd
+    home: https://bitnami.com
+    icon: https://bitnami.com/assets/stacks/postgresql/img/postgresql-stack-220x234.png
+    keywords:
+    - postgresql
+    - postgres
+    - database
+    - sql
+    - replication
+    - cluster
+    maintainers:
+    - name: VMware, Inc.
+      url: https://github.com/bitnami/charts
+    name: postgresql
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/postgresql
+    urls:
+    - https://renaiss-io.github.io/osss/charts/postgresql-13.4.4.tgz
+    version: 13.4.4
+  prometheus:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Chart Source
+          url: https://github.com/prometheus-community/helm-charts
+        - name: Upstream Project
+          url: https://github.com/prometheus/prometheus
+    apiVersion: v2
+    appVersion: v2.49.1
+    created: "2024-03-18T17:29:23.292808354-03:00"
+    dependencies:
+    - condition: alertmanager.enabled
+      name: alertmanager
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 1.8.*
+    - condition: kube-state-metrics.enabled
+      name: kube-state-metrics
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 5.16.*
+    - condition: prometheus-node-exporter.enabled
+      name: prometheus-node-exporter
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 4.30.*
+    - condition: prometheus-pushgateway.enabled
+      name: prometheus-pushgateway
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 2.7.*
+    description: Prometheus is a monitoring system and time series database.
+    digest: 34203891cdfb7420640f48a0c5686bf00fed529997e8ab967eee0fa2d70276e3
+    home: https://prometheus.io/
+    icon: https://raw.githubusercontent.com/prometheus/prometheus.github.io/master/assets/prometheus_logo-cb55bb5c346.png
+    keywords:
+    - monitoring
+    - prometheus
+    kubeVersion: '>=1.19.0-0'
+    maintainers:
+    - email: gianrubio@gmail.com
+      name: gianrubio
+    - email: zanhsieh@gmail.com
+      name: zanhsieh
+    - email: miroslav.hadzhiev@gmail.com
+      name: Xtigyro
+    - email: naseem@transit.app
+      name: naseemkullah
+    - email: rootsandtrees@posteo.de
+      name: zeritti
+    name: prometheus
+    sources:
+    - https://github.com/prometheus/alertmanager
+    - https://github.com/prometheus/prometheus
+    - https://github.com/prometheus/pushgateway
+    - https://github.com/prometheus/node_exporter
+    - https://github.com/kubernetes/kube-state-metrics
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/prometheus-25.13.0.tgz
+    version: 25.13.0
+  promtail:
+  - apiVersion: v2
+    appVersion: 2.9.3
+    created: "2024-03-18T17:29:23.293917695-03:00"
+    description: Promtail is an agent which ships the contents of local logs to a
+      Loki instance
+    digest: 8bf485b757bfc7c37e809b60a8f61324c84160c820269fda469cb6270045c514
+    home: https://grafana.com/loki
+    icon: https://raw.githubusercontent.com/grafana/loki/master/docs/sources/logo.png
+    maintainers:
+    - email: lokiproject@googlegroups.com
+      name: Loki Maintainers
+    - name: unguiculus
+    name: promtail
+    sources:
+    - https://github.com/grafana/loki
+    - https://grafana.com/oss/loki/
+    - https://grafana.com/docs/loki/latest/
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/promtail-6.15.5.tgz
+    version: 6.15.5
+  wiki:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-03-18T17:29:23.294983775-03:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 8.10.14
+    description: The most powerful and extensible open source Wiki software.
+    digest: ff129b40324b05820227ecc9dcc3ad5fb2e8ab9a76973591f33585aa916269ec
+    home: https://wiki.js.org
+    icon: https://github.com/Requarks/wiki/raw/master/client/static/favicons/android-chrome-192x192.png
+    keywords:
+    - wiki
+    - documentation
+    - knowledge base
+    - docs
+    - reference
+    - editor
+    maintainers:
+    - email: github@ngpixel.com
+      name: Nicolas Giard
+      url: https://github.com/NGPixel
+    - email: james@fuziontech.net
+      name: James Greenhill
+      url: https://github.com/fuziontech
+    name: wiki
+    sources:
+    - https://github.com/Requarks/wiki
+    type: application
+    urls:
+    - https://renaiss-io.github.io/osss/charts/wiki-2.2.0.tgz
+    version: 2.2.0
+generated: "2024-03-18T17:29:23.193715091-03:00"
