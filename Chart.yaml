@@ -1,6 +1,7 @@
 apiVersion: v2
 name: open-source-stack-for-startups
 version: 1.0.0
+icon: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZ5JREFUeNrsV8FtwzAMTIIOoBHcR/8awZnAzQS2P10n/34STRBngniE/PuoR/AGLZnQgCqoFCm76CcCCAsOxTtTCo9arR7jn8ea+/Hr/aOERw1WgOF8IHNg3frtZSQ/A48GrCJftCuZA79eRYACHsBeGX4I3tIcfQ3j26HvRJglQOAXMLtwtjEb25DEJuJ4EIJjoB0GpXlqWIr9ewZozy9CcPyaK62ztM4I1m79MxFmoNaC377iPpdmoua2oNCCZ5AoOAJlDriSRMkRGHLBFSQGLQExuJAES+A8F1xA4swROHoLssEZEiNhxAlQlZrKazsHPCDhx0xWQj/9Sw0jEiPSgU9aMHsLIlUSYz77WQgz0Hhsb6JEAZYAn2I23BZUkdRlkWD0odKWYjWJhDgVOVogJiFQRpZAnzjJLAmhLPc5WpAkoegJ2FLshP/pHySUDYlL9YSnRDMaNqUIuheCYye98188RZxaOihWkImTsiltw5ebSO0eSUA6RVOaOjtdrCPWXEws2XQxQUk9+gHBd7qYmOCr3RKi9hh/Nr4FGACzvcNREXU72gAAAABJRU5ErkJggg==
 
 dependencies:
 - name: keycloak
@@ -57,3 +58,7 @@ dependencies:
   repository: https://helm.plane.so
   version: 1.0.11
   condition: plane-ce.enabled
+- name: odoo
+  repository: https://charts.bitnami.com/bitnami
+  version: 25.6.0
+  condition: odoo.enabled

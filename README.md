@@ -18,7 +18,7 @@ This repository contains the required artifacts to enable an easy and opinionate
 ### Network
 
 - `Cert manager`: used to manage SSL certs used in the system.
-- `Contour`: used to create an envoy ingress to redirect traffic to specific apps.
+- `Nginx`: used to create an nginx ingress to redirect traffic to specific apps.
 
 ### Monitoring
 

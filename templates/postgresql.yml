@@ -28,12 +28,7 @@ metadata:
   name: {{ .Release.Name }}-postgres-init
 data:
   init.sql: |
-{{- if .Values.planka.enabled }}
     CREATE DATABASE planka;
-{{- end }}
-{{- if .Values.wiki.enabled }}
     CREATE DATABASE wiki;
-{{- end }}
-{{- if .Values.openproject.enabled }}
     CREATE DATABASE openproject;
-{{- end }}
+    CREATE DATABASE odoo;

@@ -202,7 +202,7 @@ grafana:
 # TOOLS
 ###############################################################
 kimai2:
-  enabled: true
+  enabled: false
 
   # TODO: use secret for root user
   kimaiAdminEmail: admin@example.com
@@ -312,6 +312,7 @@ planka:
   baseUrl: "http://planka.{{ .Values.global.domain }}"
   secretkey: 4dab9dc2d9011d9114b9a96e531926598adad75c70b41e78311bf96097d327812c191091852b9a7ed90e56058b4ee52ba2398ba54398f7bc9c7827785cc3a342
 
+  # TODO: set db hostname
   postgresql:
     enabled: false
 
@@ -321,7 +322,7 @@ planka:
       username: testuser
       password: testpassword
 
-  # TODO: implement planka OIDC
+  # Do not enable unless a real domain is being used
   oidc:
     enabled: false
 
@@ -332,3 +333,20 @@ planka:
 # TODO: configure plane-ce
 plane-ce:
   enabled: false
+
+odoo:
+  enabled: true
+
+  service:
+    type: ClusterIP
+
+  postgresql:
+    enabled: false
+
+  # TODO: parametrize and use secrets
+  externalDatabase:
+    host: osss-postgresql
+    port: 5432
+    user: testuser
+    database: odoo
+    password: testpassword

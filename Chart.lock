@@ -41,5 +41,8 @@ dependencies:
 - name: plane-ce
   repository: https://helm.plane.so
   version: 1.0.11
-digest: sha256:4094a2abec16ac6dfa2b2fbad248a8b3a3d1b1aa0962c65ff6e23dd7faec4ad8
-generated: "2024-03-14T13:57:41.834493615-03:00"
+- name: odoo
+  repository: https://charts.bitnami.com/bitnami
+  version: 25.6.0
+digest: sha256:5a7fc423c9263dbc5d32b9f8ced7d59b8f0bcc3596cb888ddae8565a69df4b72
+generated: "2024-03-18T17:01:39.604975895-03:00"
