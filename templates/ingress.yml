@@ -99,3 +99,15 @@ spec:
                 port:
                   number: 1337
     {{- end }}
+    {{- if .Values.odoo.enabled }}
+    - host: odoo.{{ .Values.global.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-odoo
+                port:
+                  number: 80
+    {{- end }}
