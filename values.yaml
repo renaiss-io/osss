@@ -68,6 +68,9 @@ mariadb:
 # IDP
 ###############################################################
 keycloak:
+  production: true
+  proxy: edge
+
   # Disable local postgres
   postgresql:
     enabled: false
