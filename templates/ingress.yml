@@ -28,6 +28,12 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
 spec:
   ingressClassName: nginx
+  {{- if .Values.cert-manager.enabled }}
+  tls:
+  - hosts:
+    - {{ .Values.global.domain }}
+    secretName: {{ .Release.name }}-domain-tls
+  {{- end }}
   rules:
     - host: keycloak.{{ .Values.global.domain }}
       http:
