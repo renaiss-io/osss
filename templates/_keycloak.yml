@@ -141,6 +141,42 @@ clients:
   - offline_access
   - microprofile-jwt
 {{- end }}
+{{- if .Values.odoo.enabled }}
+- id: odoo
+  name: odoo
+  clientId: odoo
+  secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZy3
+  description: SSO for odoo
+  rootUrl: http://odoo.{{ .Values.global.domain }}
+  adminUrl: http://odoo.{{ .Values.global.domain }}
+  baseUrl: http://odoo.{{ .Values.global.domain }}
+  enabled: true
+  clientAuthenticatorType: client-secret
+  redirectUris:
+  - http://odoo.{{ .Values.global.domain }}
+  - http://odoo.{{ .Values.global.domain }}/*
+  webOrigins:
+  - http://odoo.{{ .Values.global.domain }}
+  standardFlowEnabled: true
+  implicitFlowEnabled: true
+  alwaysDisplayInConsole: true
+  directAccessGrantsEnabled: true
+  serviceAccountsEnabled: false
+  publicClient: false
+  frontchannelLogout: true
+  protocol: openid-connect
+  defaultClientScopes:
+  - web-origins
+  - acr
+  - profile
+  - roles
+  - email
+  optionalClientScopes:
+  - address
+  - phone
+  - offline_access
+  - microprofile-jwt
+{{- end }}
 {{- if .Values.kimai2.enabled }}
 - id: kimai
   clientId: kimai
