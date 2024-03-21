@@ -33,9 +33,39 @@ spec:
   ingressClassName: nginx
   {{- if index .Values "cert-manager" "enabled" }}
   tls:
-  - hosts:
-    - {{ .Values.global.domain }}
-    secretName: {{ .Release.Name }}-domain-tls
+  - secretName: {{ .Release.Name }}-tls-keycloak
+    hosts:
+    - "keycloak.{{ .Values.global.domain }}"
+  {{- if .Values.grafana.enabled }}
+  - secretName: {{ .Release.Name }}-tls-grafana
+    hosts:
+    - "grafana.{{ .Values.global.domain }}"
+  {{- end }}
+  {{- if .Values.openproject.enabled }}
+  - secretName: {{ .Release.Name }}-tls-openproject
+    hosts:
+    - "openproject.{{ .Values.global.domain }}"
+  {{- end }}
+  {{- if .Values.kimai2.enabled }}
+  - secretName: {{ .Release.Name }}-tls-kimai
+    hosts:
+    - "kimai.{{ .Values.global.domain }}"
+  {{- end }}
+  {{- if .Values.wiki.enabled }}
+  - secretName: {{ .Release.Name }}-tls-wiki
+    hosts:
+    - "wiki.{{ .Values.global.domain }}"
+  {{- end }}
+  {{- if .Values.planka.enabled }}
+  - secretName: {{ .Release.Name }}-tls-planka
+    hosts:
+    - "planka.{{ .Values.global.domain }}"
+  {{- end }}
+  {{- if .Values.odoo.enabled }}
+  - secretName: {{ .Release.Name }}-tls-odoo
+    hosts:
+    - "odoo.{{ .Values.global.domain }}"
+  {{- end }}
   {{- end }}
   rules:
     - host: keycloak.{{ .Values.global.domain }}
