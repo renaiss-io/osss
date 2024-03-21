@@ -32,7 +32,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.global.domain }}
-    secretName: {{ .Release.name }}-domain-tls
+    secretName: {{ .Release.Name }}-domain-tls
   {{- end }}
   rules:
     - host: keycloak.{{ .Values.global.domain }}
