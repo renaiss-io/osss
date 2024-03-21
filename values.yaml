@@ -348,4 +348,7 @@ odoo:
     port: 5432
     user: testuser
     database: odoo
+    create: false
     password: testpassword
+    postgresqlPostgresPassword: testpassword
+    postgresqlPostgresUser: testuser
