@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: {{ tpl .Values.keycloak.keycloakConfigCli.existingConfigmap . }}
 data:
-  osss.yml: {{ include "realm.yml" . | toJson }}
+  realm.yml: {{ include "realm.yml" . | toJson }}
