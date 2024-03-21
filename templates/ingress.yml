@@ -28,7 +28,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
 spec:
   ingressClassName: nginx
-  {{- if .Values.cert-manager.enabled }}
+  {{- if index .Values "cert-manager" "enabled" }}
   tls:
   - hosts:
     - {{ .Values.global.domain }}
