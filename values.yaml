@@ -2,12 +2,11 @@
 # BASE VARIABLES
 ###############################################################
 global:
-  domain: test.local
+  domain: localhost
 
 ###############################################################
 # NETWORK
 ###############################################################
-# TODO: implement cert manager in a production environment
 cert-manager:
   enabled: false
 
@@ -62,7 +61,7 @@ mariadb:
       enabled: true
       storageClass:
       accessModes:
-        - ReadWriteOnce
+      - ReadWriteOnce
       size: 4Gi
 
 ###############################################################
@@ -120,7 +119,7 @@ promtail:
 
   config:
     clients:
-      - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
+    - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
 
 loki:
   enabled: true
