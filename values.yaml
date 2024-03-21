@@ -10,8 +10,6 @@ global:
 cert-manager:
   enabled: false
 
-  installCRDs: true
-
 ingress-nginx:
   controller:
     metrics:
