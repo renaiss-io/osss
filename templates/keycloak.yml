@@ -1,3 +1,4 @@
+# Siguiendo con la misma lógica, se utiliza en values keycloakConfigCli
 apiVersion: v1
 kind: ConfigMap
 metadata:

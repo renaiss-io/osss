@@ -1,3 +1,7 @@
+# El caso de grafana es más complejo. Para especificar dashboards y datasources se utilizan sidecars.
+# en el values.yaml se especifican en grafana sidecars.dashboard.enabled y sidecars.datasources.enabled para que grafana busque
+# Por otro lado, el chart viene con una configuración por defecto de sidecar.dashboard.label = grafana_dashboard que lo que
+# hace es buscar el configmap que tenga este label y agregar los dashboards en el configmap. Lo mismo para datasources
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,10 +9,14 @@ metadata:
   labels:
     grafana_dashboard: "true"
 data: # TODO: make this iterate over json in grafana folder
+  dashboard_keycloak.json: |
+{{ .Files.Get "grafana/dashboard_keycloak.json" | indent 4 }}
   dashboard_postgres.json: |
 {{ .Files.Get "grafana/dashboard_postgresql.json" | indent 4 }}
   dashboard_mysql.json: |
 {{ .Files.Get "grafana/dashboard_mysql.json" | indent 4 }}
+  my_dashboard_mariabd.json: |
+{{ .Files.Get "grafana/my_dashboard_mariabd.json" | indent 4 }}
   dashboard_main.json: |
 {{ .Files.Get "grafana/dashboard_main.json" | indent 4 }}
 ---
@@ -28,3 +36,13 @@ data:
       - name: loki
         type: loki
         url: http://{{ .Release.Name }}-loki:3100
+---
+# Definir secret para definir variables de entorno. No esta en uso, borrar si es necesario.
+kind: Secret
+apiVersion: v1
+# stringData:
+#   GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
+#   GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+metadata:
+  #creationTimestamp: null
+  name: grafana-env-secret

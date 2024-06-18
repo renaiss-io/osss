@@ -4,61 +4,61 @@ version: 1.0.0
 icon: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZ5JREFUeNrsV8FtwzAMTIIOoBHcR/8awZnAzQS2P10n/34STRBngniE/PuoR/AGLZnQgCqoFCm76CcCCAsOxTtTCo9arR7jn8ea+/Hr/aOERw1WgOF8IHNg3frtZSQ/A48GrCJftCuZA79eRYACHsBeGX4I3tIcfQ3j26HvRJglQOAXMLtwtjEb25DEJuJ4EIJjoB0GpXlqWIr9ewZozy9CcPyaK62ztM4I1m79MxFmoNaC377iPpdmoua2oNCCZ5AoOAJlDriSRMkRGHLBFSQGLQExuJAES+A8F1xA4swROHoLssEZEiNhxAlQlZrKazsHPCDhx0xWQj/9Sw0jEiPSgU9aMHsLIlUSYz77WQgz0Hhsb6JEAZYAn2I23BZUkdRlkWD0odKWYjWJhDgVOVogJiFQRpZAnzjJLAmhLPc5WpAkoegJ2FLshP/pHySUDYlL9YSnRDMaNqUIuheCYye98188RZxaOihWkImTsiltw5ebSO0eSUA6RVOaOjtdrCPWXEws2XQxQUk9+gHBd7qYmOCr3RKi9hh/Nr4FGACzvcNREXU72gAAAABJRU5ErkJggg==
 
 dependencies:
-- name: keycloak
-  version: 18.4.0
-  repository: https://charts.bitnami.com/bitnami
-- name: ingress-nginx
-  version: 4.10.0
-  repository: https://kubernetes.github.io/ingress-nginx
-- name: cert-manager
-  version: 1.14.3
-  repository: https://charts.jetstack.io
-  condition: cert-manager.enabled
-- name: postgresql
-  version: 13.4.4
-  repository: https://charts.bitnami.com/bitnami
-  condition: postgresql.enabled
-- name: mariadb
-  condition: mariadb.enabled
-  repository: https://charts.bitnami.com/bitnami
-  version: 11.5.7
-- name: prometheus
-  version: 25.13.0
-  repository: https://prometheus-community.github.io/helm-charts
-  condition: prometheus.enabled
-- name: grafana
-  version: 7.3.0
-  repository: https://grafana.github.io/helm-charts
-  condition: grafana.enabled
-- name: loki
-  version: 5.43.6
-  repository: https://grafana.github.io/helm-charts
-  condition: loki.enabled
-- name: promtail
-  version: 6.15.5
-  repository: https://grafana.github.io/helm-charts
-  condition: promtail.enabled
-- name: kimai2
-  version: 3.1.11
-  repository: https://robjuz.github.io/helm-charts
-  condition: kimai2.enabled
-- name: openproject
-  version: 4.5.0
-  repository: https://charts.openproject.org
-  condition: openproject.enabled
-- name: wiki
-  version: 2.2.0
-  repository: https://charts.js.wiki
-  condition: wiki.enabled
-- name: planka
-  version: 0.1.17
-  repository: file://./planka
-  condition: planka.enabled
-- name: plane-ce
-  repository: https://helm.plane.so
-  version: 1.0.11
-  condition: plane-ce.enabled
-- name: odoo
-  repository: https://charts.bitnami.com/bitnami
-  version: 25.6.0
-  condition: odoo.enabled
+  - name: keycloak
+    version: 18.4.0
+    repository: https://charts.bitnami.com/bitnami
+  - name: ingress-nginx
+    version: 4.10.0
+    repository: https://kubernetes.github.io/ingress-nginx
+  - name: cert-manager
+    version: 1.14.3
+    repository: https://charts.jetstack.io
+    condition: cert-manager.enabled
+  - name: postgresql
+    version: 13.4.4
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: mariadb
+    condition: mariadb.enabled
+    repository: https://charts.bitnami.com/bitnami
+    version: 11.5.7
+  - name: prometheus
+    version: 25.13.0
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus.enabled
+  - name: grafana
+    version: 7.3.0
+    repository: https://grafana.github.io/helm-charts
+    condition: grafana.enabled
+  - name: loki
+    version: 5.43.6
+    repository: https://grafana.github.io/helm-charts
+    condition: loki.enabled
+  - name: promtail
+    version: 6.15.5
+    repository: https://grafana.github.io/helm-charts
+    condition: promtail.enabled
+  - name: kimai2
+    version: 3.1.11
+    repository: https://robjuz.github.io/helm-charts
+    condition: kimai2.enabled
+  - name: openproject
+    version: 4.5.0
+    repository: https://charts.openproject.org
+    condition: openproject.enabled
+  - name: wiki
+    version: 2.2.0
+    repository: https://charts.js.wiki
+    condition: wiki.enabled
+  - name: planka
+    version: 0.1.17
+    repository: file://./planka
+    condition: planka.enabled
+  - name: plane-ce
+    repository: https://helm.plane.so
+    version: 1.0.11
+    condition: plane-ce.enabled
+  - name: odoo
+    repository: https://charts.bitnami.com/bitnami
+    version: 25.6.0
+    condition: odoo.enabled

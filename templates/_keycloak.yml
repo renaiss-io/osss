@@ -3,6 +3,34 @@
 id: osss
 realm: osss
 enabled: true
+roles:
+  client:
+  {{- if .Values.grafana.enabled }}
+    grafana:
+      - name: "editor"
+        description: "Role for editor in grafana."
+        composite: false
+        clientRole: true
+        containerId: "grafana"
+      - name: "admin"
+        description: "Role for admin in grafana."
+        composite: false
+        clientRole: true
+        containerId: "grafana"
+  {{- end }}
+groups:
+  {{- if .Values.grafana.enabled }}
+  - name: "grafana-admin"
+    path: "/grafana-admin"
+    clientRoles:
+      grafana:
+        - "admin"
+  - name: "grafana-editor"
+    path: "/grafana-editor"
+    clientRoles:
+      grafana:
+        - "editor"
+  {{- end }}
 components:
   org.keycloak.keys.KeyProvider:
   - id: eedcbe24-d6d6-4620-85d4-c3051ff0ffad
@@ -58,18 +86,29 @@ components:
       algorithm:
       - RSA-OAEP
 users:
-- id: test
-  email: test@{{ .Values.global.domain }}
+- id: test-editor
+  email: test@editor.com #test@{{ .Values.global.domain }}
   firstName: Test
   lastName: Test
-  username: test
+  username: test-editor
   enabled: true
   emailVerified: true
+  groups:
+  - grafana-editor
   credentials:
   - id: pwd
     type: password
     secretData: '{"value":"3ZPSl7/19IzhuCZCsoQI1E6Aj3EA08guyee6o7EWG+0=","salt":"kYx1y7Ffpuu562pD2OQogg==","additionalParameters":{}}'
     credentialData: '{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}'
+- id: test-admin
+  email: test@admin.com
+  firstName: Test
+  lastName: Test
+  username: test-admin
+  enabled: true
+  emailVerified: true
+  groups:
+  - grafana-admin
 clients:
 {{- if .Values.grafana.enabled }}
 - id: grafana
@@ -77,15 +116,16 @@ clients:
   clientId: grafana
   secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
   description: SSO for grafana
-  rootUrl: http://grafana.{{ .Values.global.domain }}
-  baseUrl: http://grafana.{{ .Values.global.domain }}/login/generic_oauth
+  # Hardcodear urls con el dominio. Investigar cómo parametrizar más adelante
+  rootUrl: http://127.0.0.1:3000 #http://grafana.{{ .Values.global.domain }}
+  baseUrl: http://127.0.0.1:3000/login/generic_oauth #http://grafana.{{ .Values.global.domain }}/login/generic_oauth
   enabled: true
   alwaysDisplayInConsole: true
   clientAuthenticatorType: client-secret
   redirectUris:
-  - http://grafana.{{ .Values.global.domain }}/login/generic_oauth
+  - http://127.0.0.1:3000/login/generic_oauth #http://grafana.{{ .Values.global.domain }}/login/generic_oauth
   webOrigins:
-  - http://grafana.{{ .Values.global.domain }}
+  - http://127.0.0.1:3000 #http://grafana.{{ .Values.global.domain }}
   standardFlowEnabled: true
   implicitFlowEnabled: false
   directAccessGrantsEnabled: true
@@ -93,6 +133,19 @@ clients:
   publicClient: false
   frontchannelLogout: true
   protocol: openid-connect
+  protocolMappers: # Role mapping. Asegurarse  que claim.name coincida con role_attribute_path en values.yaml
+    - name: "grafana_roles"
+      protocol: "openid-connect"
+      protocolMapper: "oidc-usermodel-client-role-mapper"
+      consentRequired: false
+      config:
+        introspection.token.claim: "true"
+        multivalued: "true"
+        userinfo.token.claim: "true"
+        id.token.claim: "true"
+        access.token.claim: "true"
+        claim.name: "grafana.roles"
+        jsonType.label: "String"
   defaultClientScopes:
   - web-origins
   - acr
