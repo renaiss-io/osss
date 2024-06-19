@@ -198,8 +198,7 @@ grafana:
       auth_url: "http://keycloak.{{ .Values.global.domain }}/realms/osss/protocol/openid-connect/auth"
       token_url: http://osss-keycloak/realms/osss/protocol/openid-connect/token
       api_url: http://osss-keycloak/realms/osss/protocol/openid-connect/userinfo
-      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
-
+      role_attribute_path: contains(grafana.roles[], 'admin') && 'Admin' || contains(grafana.roles[], 'editor') && 'Editor' || 'Viewer'
 ###############################################################
 # TOOLS
 ###############################################################

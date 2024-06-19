@@ -3,6 +3,34 @@
 id: osss
 realm: osss
 enabled: true
+roles:
+  client:
+  {{- if .Values.grafana.enabled }}
+    grafana:
+      - name: "editor"
+        description: "Role for editor in grafana."
+        composite: false
+        clientRole: true
+        containerId: "grafana"
+      - name: "admin"
+        description: "Role for admin in grafana."
+        composite: false
+        clientRole: true
+        containerId: "grafana"
+  {{- end }}
+groups:
+  {{- if .Values.grafana.enabled }}
+  - name: "grafana-admin"
+    path: "/grafana-admin"
+    clientRoles:
+      grafana:
+        - "admin"
+  - name: "grafana-editor"
+    path: "/grafana-editor"
+    clientRoles:
+      grafana:
+        - "editor"
+  {{- end }}
 components:
   org.keycloak.keys.KeyProvider:
   - id: eedcbe24-d6d6-4620-85d4-c3051ff0ffad
@@ -65,11 +93,22 @@ users:
   username: test
   enabled: true
   emailVerified: true
+  groups:
+  - grafana-admin
   credentials:
   - id: pwd
     type: password
     secretData: '{"value":"3ZPSl7/19IzhuCZCsoQI1E6Aj3EA08guyee6o7EWG+0=","salt":"kYx1y7Ffpuu562pD2OQogg==","additionalParameters":{}}'
     credentialData: '{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}'
+- id: test-editor
+  email: test@editor.com
+  firstName: Test
+  lastName: Test
+  username: test-editor
+  enabled: true
+  emailVerified: true
+  groups:
+  - grafana-editor
 clients:
 {{- if .Values.grafana.enabled }}
 - id: grafana
@@ -93,6 +132,19 @@ clients:
   publicClient: false
   frontchannelLogout: true
   protocol: openid-connect
+  protocolMappers:
+    - name: "grafana_roles"
+      protocol: "openid-connect"
+      protocolMapper: "oidc-usermodel-client-role-mapper"
+      consentRequired: false
+      config:
+        introspection.token.claim: "true"
+        multivalued: "true"
+        userinfo.token.claim: "true"
+        id.token.claim: "true"
+        access.token.claim: "true"
+        claim.name: "grafana.roles"
+        jsonType.label: "String"
   defaultClientScopes:
   - web-origins
   - acr
