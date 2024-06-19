@@ -1,5 +1,4 @@
 ---
-# Acaso estos secrets estan siendo usados?
 apiVersion: v1
 kind: Secret
 type: Opaque
@@ -22,8 +21,6 @@ metadata:
 data:
   uri: {{ "postgresql://testuser:testpassword@osss-postgresql:5432/planka" | b64enc }}
 ---
-# Específico del chart de postgres de bitnami. Este permite mediante primary.initdb.scriptsConfigMap especificar el recurso de ConfigMap
-# para utilizar. En este caso, se utiliza para crear más databases, ya que desde el chart se puede especificar solo una
 {{- end }}
 apiVersion: v1
 kind: ConfigMap

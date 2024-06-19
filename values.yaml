@@ -10,16 +10,15 @@ global:
 cert-manager:
   enabled: false
 
-# ingress-nginx:
-#   enabled: false
-#   controller:
-#     metrics:
-#       enabled: true
+ingress-nginx:
+  controller:
+    metrics:
+      enabled: true
 
-#       service:
-#         annotations:
-#           prometheus.io/scrape: "true"
-#           prometheus.io/port: "10254"
+      service:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "10254"
 
 ###############################################################
 # DATABASES
@@ -62,14 +61,14 @@ mariadb:
       enabled: true
       storageClass:
       accessModes:
-        - ReadWriteOnce
+      - ReadWriteOnce
       size: 4Gi
 
 ###############################################################
 # IDP
 ###############################################################
 keycloak:
-  production: false
+  production: true
   proxy: edge
 
   # Disable local postgres
@@ -123,7 +122,7 @@ promtail:
 
   config:
     clients:
-      - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
+    - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
 
 loki:
   enabled: true
@@ -165,7 +164,6 @@ loki:
 grafana:
   enabled: true
   assertNoLeakedSecrets: false
-  envFromSecret: "grafana-env-secret"
 
   # TODO: use secret for root user
   adminUser: admin
@@ -181,7 +179,7 @@ grafana:
   # Configure SSO with keycloak
   grafana.ini:
     server:
-      root_url: "http://127.0.0.1:3000" #"http://grafana.{{ .Values.global.domain }}"
+      root_url: "http://grafana.{{ .Values.global.domain }}"
 
     dashboards:
       default_home_dashboard_path: /tmp/dashboards/dashboard_main.json
@@ -197,11 +195,10 @@ grafana:
       email_attribute_path: email
       login_attribute_path: username
       name_attribute_path: full_name
-      # Cambiar temporariamente las redirecciones para que funcione en development. Investigar cómo parametrizar los dominios
-      auth_url: "http://127.0.0.1:8080/realms/osss/protocol/openid-connect/auth" #"http://keycloak.{{ .Values.global.domain }}/realms/osss/protocol/openid-connect/auth"
-      token_url: http://osss-keycloak/realms/osss/protocol/openid-connect/token # Estos endpoints serán accedidos por grafana dentro del cluster. Dejar resolución nombre de servicio.
+      auth_url: "http://keycloak.{{ .Values.global.domain }}/realms/osss/protocol/openid-connect/auth"
+      token_url: http://osss-keycloak/realms/osss/protocol/openid-connect/token
       api_url: http://osss-keycloak/realms/osss/protocol/openid-connect/userinfo
-      role_attribute_path: contains(grafana.roles[], 'admin') && 'Admin' || contains(grafana.roles[], 'editor') && 'Editor' || 'Viewer'
+      role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
 
 ###############################################################
 # TOOLS
@@ -342,9 +339,6 @@ plane-ce:
 odoo:
   enabled: true
 
-  odooEmail: user@example.com
-  odooPassword: admin
-
   service:
     type: ClusterIP
 
@@ -353,7 +347,7 @@ odoo:
 
   # TODO: parametrize and use secrets
   externalDatabase:
-    host: osss-postgresql #"{{ .Release.Name }}-postgresql" # Usar fullnameoverride en el chart de postgres para evitar problemas con el nombre del release
+    host: osss-postgresql
     port: 5432
     user: testuser
     database: odoo
