@@ -3,23 +3,6 @@
 id: osss
 realm: osss
 enabled: true
-clientScopes:
-  {{- if .Values.kimai2.enabled }}
-  - name: "role_list"
-    description: "SAML role list"
-    protocol: "saml"
-    attributes:
-      display.on.consent.screen: "true"
-    protocolMappers:
-      - name: "role list"
-        protocol: "saml"
-        protocolMapper: "saml-role-list-mapper"
-        consentRequired: false
-        config:
-          single: "true"
-          attribute.nameformat: "Basic"
-          attribute.name: "Roles"
-  {{- end }}
 roles:
   client:
   {{- if .Values.kimai2.enabled }}
@@ -274,7 +257,7 @@ clients:
     saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer: KEY_ID
   protocolMappers:
   - id: 9f99ca87-46e4-4b32-a6f9-472feef39a2d
-    name: role list
+    name: role_list
     protocol: saml
     protocolMapper: saml-role-list-mapper
     consentRequired: false
