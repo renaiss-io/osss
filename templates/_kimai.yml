@@ -13,6 +13,7 @@ kimai:
         attribute: Roles
         mapping:
             - { saml: Admins, kimai: ROLE_ADMIN }
+            - { saml: SystemAdmins, kimai: ROLE_SUPER_ADMIN }
             - { saml: Management, kimai: ROLE_TEAMLEAD }
     connection:
         idp:
