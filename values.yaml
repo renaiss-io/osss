@@ -31,9 +31,11 @@ postgresql:
   # Override defaults values for the DB
   # TODO: use secrets for DB credentials
   auth:
-    username: testuser
-    password: testpassword
     database: keycloak
+    existingSecret: osss-psql-secrets
+    keys:
+      username: username
+      postgres-password: password
 
   metrics:
     enabled: true
@@ -51,10 +53,13 @@ mariadb:
 
   # TODO: use secrets for DB credentials
   auth:
-    rootPassword: kimaiR00tPassw0rd
     database: kimai
-    username: kimai
-    password: kimai
+    existingSecret: osss-mariadb-secrets
+    keys:
+      username: username
+      password: password
+      rootPassword: rootPassword
+
 
   primary:
     persistence:
