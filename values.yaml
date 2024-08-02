@@ -60,13 +60,12 @@ mariadb:
       password: password
       rootPassword: rootPassword
 
-
   primary:
     persistence:
       enabled: true
       storageClass:
       accessModes:
-      - ReadWriteOnce
+        - ReadWriteOnce
       size: 4Gi
 
 ###############################################################
@@ -85,6 +84,8 @@ keycloak:
   auth:
     adminUser: admin
     adminPassword: admin
+    # existingSecret: osss-keycloak-secret-user-credentials
+    # passwordSecretKey: admin-password
 
   # Create preconfigured realm
   keycloakConfigCli:
@@ -127,7 +128,7 @@ promtail:
 
   config:
     clients:
-    - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
+      - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
 
 loki:
   enabled: true
@@ -346,6 +347,19 @@ odoo:
 
   service:
     type: ClusterIP
+
+  customPostInitScripts:
+    python-jose.sh: |
+      #!/bin/bash
+
+      # Change to the Odoo directory
+      cd ../opt/bitnami/odoo/ || { echo "Directory not found"; exit 1; }
+
+      # Activate the virtual environment
+      source venv/bin/activate || { echo "Failed to activate virtual environment"; exit 1; }
+
+      # Install the required Python package
+      pip3 install python-jose || { echo "Failed to install python-jose"; exit 1; }
 
   postgresql:
     enabled: false
