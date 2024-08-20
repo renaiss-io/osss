@@ -349,7 +349,12 @@ odoo:
     type: ClusterIP
 
   customPostInitScripts:
-    python-jose.sh: |
+
+    01_git-installation.sh: |
+      #!/bin/bash
+      apt-get update && apt-get install -y git
+
+    03_python-jose-installation.sh: |
       #!/bin/bash
 
       # Change to the Odoo directory
@@ -360,6 +365,21 @@ odoo:
 
       # Install the required Python package
       pip3 install python-jose || { echo "Failed to install python-jose"; exit 1; }
+
+    02_auth-module-repo-download.sh: |
+      #!/bin/bash
+
+      cd ../opt/bitnami/odoo/addons || { echo "Directory not found"; exit 1; }
+      git clone --branch 17.0 --single-branch "https://github.com/OCA/server-auth.git"
+
+    04_auth-oidc-fix.sh: |
+      #!/bin/bash
+      cd ../opt/bitnami/odoo/addons/server-auth
+      mv auth_oidc ..
+      cd ..
+      rm -rf ./server-auth
+
+    
 
   postgresql:
     enabled: false
