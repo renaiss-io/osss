@@ -31,9 +31,11 @@ postgresql:
   # Override defaults values for the DB
   # TODO: use secrets for DB credentials
   auth:
-    username: testuser
-    password: testpassword
     database: keycloak
+    existingSecret: osss-psql-secrets
+    keys:
+      username: username
+      postgres-password: password
 
   metrics:
     enabled: true
@@ -51,17 +53,19 @@ mariadb:
 
   # TODO: use secrets for DB credentials
   auth:
-    rootPassword: kimaiR00tPassw0rd
     database: kimai
-    username: kimai
-    password: kimai
+    existingSecret: osss-mariadb-secrets
+    keys:
+      username: username
+      password: password
+      rootPassword: rootPassword
 
   primary:
     persistence:
       enabled: true
       storageClass:
       accessModes:
-      - ReadWriteOnce
+        - ReadWriteOnce
       size: 4Gi
 
 ###############################################################
@@ -80,6 +84,8 @@ keycloak:
   auth:
     adminUser: admin
     adminPassword: admin
+    # existingSecret: osss-keycloak-secret-user-credentials
+    # passwordSecretKey: admin-password
 
   # Create preconfigured realm
   keycloakConfigCli:
@@ -122,7 +128,7 @@ promtail:
 
   config:
     clients:
-    - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
+      - url: http://{{ .Release.Name }}-loki:3100/loki/api/v1/push
 
 loki:
   enabled: true
@@ -341,6 +347,39 @@ odoo:
 
   service:
     type: ClusterIP
+
+  customPostInitScripts:
+
+    01_git-installation.sh: |
+      #!/bin/bash
+      apt-get update && apt-get install -y git
+
+    03_python-jose-installation.sh: |
+      #!/bin/bash
+
+      # Change to the Odoo directory
+      cd ../opt/bitnami/odoo/ || { echo "Directory not found"; exit 1; }
+
+      # Activate the virtual environment
+      source venv/bin/activate || { echo "Failed to activate virtual environment"; exit 1; }
+
+      # Install the required Python package
+      pip3 install python-jose || { echo "Failed to install python-jose"; exit 1; }
+
+    02_auth-module-repo-download.sh: |
+      #!/bin/bash
+
+      cd ../opt/bitnami/odoo/addons || { echo "Directory not found"; exit 1; }
+      git clone --branch 17.0 --single-branch "https://github.com/OCA/server-auth.git"
+
+    04_auth-oidc-fix.sh: |
+      #!/bin/bash
+      cd ../opt/bitnami/odoo/addons/server-auth
+      mv auth_oidc ..
+      cd ..
+      rm -rf ./server-auth
+
+    
 
   postgresql:
     enabled: false
