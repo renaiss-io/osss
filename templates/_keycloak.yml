@@ -18,6 +18,24 @@ roles:
         clientRole: true
         containerId: "grafana"
   {{- end }}
+  {{- if .Values.kimai2.enabled }}
+    kimai:
+      - name: "Management"
+        description: "Role for Management in Kimai."
+        composite: false
+        clientRole: true
+        containerId: "kimai"
+      - name: "Admins"
+        description: "Role for Admin in kimai."
+        composite: false
+        clientRole: true
+        containerId: "kimai"
+      - name: "SystemAdmins"
+        description: "Role for System Admin in kimai."
+        composite: false
+        clientRole: true
+        containerId: "kimai"
+  {{- end }}
 groups:
   {{- if .Values.grafana.enabled }}
   - name: "grafana-admin"
@@ -30,6 +48,22 @@ groups:
     clientRoles:
       grafana:
         - "editor"
+  {{- if .Values.kimai2.enabled }}
+  - name: "kimai-admin"
+    path: "/kimai-admin"
+    clientRoles:
+      kimai:
+        - "Admins"
+  - name: "kimai-systemadmin"
+    path: "/kimai-systemadmin"
+    clientRoles:
+      kimai:
+        - "SystemAdmins"
+  - name: "kimai-management"
+    path: "/kimai-management"
+    clientRoles:
+      kimai:
+        - "Management"
   {{- end }}
 components:
   org.keycloak.keys.KeyProvider:
@@ -95,6 +129,9 @@ users:
   emailVerified: true
   groups:
   - grafana-admin
+  {{- if .Values.kimai2.enabled }}
+  - kimai-management
+  {{- end }}
   credentials:
   - id: pwd
     type: password
@@ -267,7 +304,7 @@ clients:
     saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer: KEY_ID
   protocolMappers:
   - id: 9f99ca87-46e4-4b32-a6f9-472feef39a2d
-    name: role list
+    name: role_list
     protocol: saml
     protocolMapper: saml-role-list-mapper
     consentRequired: false
