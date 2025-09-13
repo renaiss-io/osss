@@ -5,6 +5,19 @@ realm: osss
 enabled: true
 roles:
   client:
+  {{- if .Values.grafana.enabled }}
+    grafana:
+      - name: "editor"
+        description: "Role for editor in grafana."
+        composite: false
+        clientRole: true
+        containerId: "grafana"
+      - name: "admin"
+        description: "Role for admin in grafana."
+        composite: false
+        clientRole: true
+        containerId: "grafana"
+  {{- end }}
   {{- if .Values.kimai2.enabled }}
     kimai:
       - name: "Management"
@@ -24,6 +37,17 @@ roles:
         containerId: "kimai"
   {{- end }}
 groups:
+  {{- if .Values.grafana.enabled }}
+  - name: "grafana-admin"
+    path: "/grafana-admin"
+    clientRoles:
+      grafana:
+        - "admin"
+  - name: "grafana-editor"
+    path: "/grafana-editor"
+    clientRoles:
+      grafana:
+        - "editor"
   {{- if .Values.kimai2.enabled }}
   - name: "kimai-admin"
     path: "/kimai-admin"
@@ -104,6 +128,7 @@ users:
   enabled: true
   emailVerified: true
   groups:
+  - grafana-admin
   {{- if .Values.kimai2.enabled }}
   - kimai-management
   {{- end }}
@@ -112,6 +137,15 @@ users:
     type: password
     secretData: '{"value":"3ZPSl7/19IzhuCZCsoQI1E6Aj3EA08guyee6o7EWG+0=","salt":"kYx1y7Ffpuu562pD2OQogg==","additionalParameters":{}}'
     credentialData: '{"hashIterations":27500,"algorithm":"pbkdf2-sha256","additionalParameters":{}}'
+- id: test-editor
+  email: test@editor.com
+  firstName: Test
+  lastName: Test
+  username: test-editor
+  enabled: true
+  emailVerified: true
+  groups:
+  - grafana-editor
 clients:
 {{- if .Values.grafana.enabled }}
 - id: grafana
@@ -135,6 +169,19 @@ clients:
   publicClient: false
   frontchannelLogout: true
   protocol: openid-connect
+  protocolMappers:
+    - name: "grafana_roles"
+      protocol: "openid-connect"
+      protocolMapper: "oidc-usermodel-client-role-mapper"
+      consentRequired: false
+      config:
+        introspection.token.claim: "true"
+        multivalued: "true"
+        userinfo.token.claim: "true"
+        id.token.claim: "true"
+        access.token.claim: "true"
+        claim.name: "grafana.roles"
+        jsonType.label: "String"
   defaultClientScopes:
   - web-origins
   - acr
