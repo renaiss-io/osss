@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: osss-ingress-main
   annotations:
-    nginx.ingress.kubernetes.io/permanent-redirect: http://keycloak.{{ .Values.global.domain }}/realms/osss/account
+    nginx.ingress.kubernetes.io/permanent-redirect: https://keycloak.{{ .Values.global.domain }}/realms/master/account
 spec:
   ingressClassName: nginx
   rules:
@@ -33,14 +33,6 @@ spec:
   ingressClassName: nginx
   {{- if index .Values "cert-manager" "enabled" }}
   tls:
-  - secretName: {{ .Release.Name }}-tls-keycloak
-    hosts:
-    - "keycloak.{{ .Values.global.domain }}"
-  {{- if .Values.grafana.enabled }}
-  - secretName: {{ .Release.Name }}-tls-grafana
-    hosts:
-    - "grafana.{{ .Values.global.domain }}"
-  {{- end }}
   {{- if .Values.openproject.enabled }}
   - secretName: {{ .Release.Name }}-tls-openproject
     hosts:
@@ -68,28 +60,6 @@ spec:
   {{- end }}
   {{- end }}
   rules:
-    - host: keycloak.{{ .Values.global.domain }}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Release.Name }}-keycloak
-                port:
-                  number: 80
-    {{- if .Values.grafana.enabled }}
-    - host: grafana.{{ .Values.global.domain }}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Release.Name }}-grafana
-                port:
-                  number: 80
-    {{- end }}
     {{- if .Values.openproject.enabled }}
     - host: openproject.{{ .Values.global.domain }}
       http:

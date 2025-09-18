@@ -1,4 +1,3 @@
-# TODO: fix kimai SSO
 {{- define "kimai.yml" -}}
 kimai:
   saml:

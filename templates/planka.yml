@@ -1,0 +1,12 @@
+{{- if .Values.planka.enabled }}
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+
+metadata:
+  name: planka-postgresql-svcbind-custom-user
+
+data:
+  uri: {{ "postgresql://testuser:testpassword@osss-postgresql:5432/planka" | b64enc }}
+{{- end }}

@@ -28,3 +28,274 @@ data:
       - name: loki
         type: loki
         url: http://{{ .Release.Name }}-loki:3100
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    {{- if index .Values "cert-manager" "enabled" }}
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    {{- end }}
+spec:
+  ingressClassName: nginx
+  {{- if index .Values "cert-manager" "enabled" }}
+  tls:
+  - secretName: {{ .Release.Name }}-tls-grafana
+    hosts:
+    - "grafana.{{ .Values.global.domain }}"
+  {{- end }}
+  rules:
+    - host: grafana.{{ .Values.global.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-grafana
+                port:
+                  number: 80
+---
+# Keycloak configurations
+# https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/keycloak/
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: grafana-keycloak-client-secret
+spec:
+  refreshInterval: "0"
+  target:
+    name: grafana-keycloak-client-secret
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: ClusterGenerator
+        name: {{ .Release.Name }}-k8s-secrets-generator
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: grafana-secret
+spec:
+  secretStoreRef:
+    name: {{ .Release.Name }}-k8s-secrets
+    kind: SecretStore
+  target:
+    name: grafana-secret
+    template:
+      engineVersion: v2
+      data:
+        GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: {{ `"{{ .client_secret }}"` }}
+  data:
+  - secretKey: client_secret
+    remoteRef:
+      key: grafana-keycloak-client-secret
+      property: password
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: grafana-root-password
+spec:
+  refreshInterval: "0"
+  target:
+    name: grafana-root-password
+  dataFrom:
+  - sourceRef:
+      generatorRef:
+        apiVersion: generators.external-secrets.io/v1alpha1
+        kind: ClusterGenerator
+        name: {{ .Release.Name }}-k8s-secrets-generator
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: grafana-root-user
+spec:
+  secretStoreRef:
+    name: {{ .Release.Name }}-k8s-secrets
+    kind: SecretStore
+  target:
+    name: grafana-root-user
+    template:
+      engineVersion: v2
+      data:
+        admin-password: {{ `"{{ .password }}"` }}
+        admin-user: admin
+  data:
+  - secretKey: password
+    remoteRef:
+      key: grafana-root-password
+      property: password
+---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: grafana
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    name: Grafana
+    description: SSO for grafana
+    accessType: CONFIDENTIAL
+    clientId: grafana
+    clientSecretSecretRef:
+      namespace: {{ .Release.Namespace }}
+      name: grafana-keycloak-client-secret
+      key: password
+    standardFlowEnabled: true
+    frontchannelLogoutEnabled: true
+    rootUrl: https://grafana.{{ .Values.global.domain }}
+    baseUrl: https://grafana.{{ .Values.global.domain }}
+    validRedirectUris:
+      - https://grafana.{{ .Values.global.domain }}/login/generic_oauth
+    webOrigins:
+      - https://grafana.{{ .Values.global.domain }}
+---
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: grafana-roles
+spec:
+  forProvider:
+    clientIdRef:
+      name: grafana
+    realmId: master
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
+    name: grafana_roles
+    config:
+      introspection.token.claim: "true"
+      multivalued: "true"
+      userinfo.token.claim: "true"
+      id.token.claim: "true"
+      access.token.claim: "true"
+      claim.name: "grafana.roles"
+      jsonType.label: "String"
+  providerConfigRef:
+    name: keycloak-provider-config
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-viewer
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    name: viewer
+    description: Role for viewer in grafana
+    clientIdRef:
+      name: grafana
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-editor
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    name: editor
+    description: Role for editor in grafana
+    clientIdRef:
+      name: grafana
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-admin
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    name: admin
+    description: Role for admin in grafana
+    clientIdRef:
+      name: grafana
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: grafana-admin
+spec:
+  forProvider:
+    name: grafana-admin
+    realmId: master
+  providerConfigRef:
+    name: keycloak-provider-config
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: grafana-admin
+spec:
+  forProvider:
+    realmId: master
+    groupIdRef:
+      name: grafana-admin
+    roleIdsRefs:
+      - name: grafana-admin
+  providerConfigRef:
+    name: keycloak-provider-config
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: grafana-editor
+spec:
+  forProvider:
+    name: grafana-editor
+    realmId: master
+  providerConfigRef:
+    name: keycloak-provider-config
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: grafana-editor
+spec:
+  forProvider:
+    realmId: master
+    groupIdRef:
+      name: grafana-editor
+    roleIdsRefs:
+      - name: grafana-editor
+  providerConfigRef:
+    name: keycloak-provider-config
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: grafana-viewer
+spec:
+  forProvider:
+    name: grafana-viewer
+    realmId: master
+  providerConfigRef:
+    name: keycloak-provider-config
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: grafana-viewer
+spec:
+  forProvider:
+    realmId: master
+    groupIdRef:
+      name: grafana-viewer
+    roleIdsRefs:
+      - name: grafana-viewer
+  providerConfigRef:
+    name: keycloak-provider-config

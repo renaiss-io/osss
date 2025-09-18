@@ -8,10 +8,18 @@ global:
 # NETWORK
 ###############################################################
 cert-manager:
-  enabled: false
+  enabled: true
+
+external-dns:
+  enabled: true
 
 ingress-nginx:
   controller:
+    watchIngressWithoutClass: true
+
+    ingressClassResource:
+      default: true
+
     metrics:
       enabled: true
 
@@ -23,85 +31,25 @@ ingress-nginx:
 ###############################################################
 # DATABASES
 ###############################################################
-# Deploy postgres DB if no external DB is set
-postgresql:
+cloudnative-pg:
   enabled: true
-  architecture: standalone
 
-  # Override defaults values for the DB
-  # TODO: use secrets for DB credentials
-  auth:
-    username: testuser
-    password: testpassword
-    database: keycloak
-
-  metrics:
-    enabled: true
-
-  primary:
-    initdb:
-      scriptsConfigMap: "{{ .Release.Name }}-postgres-init"
-
-mariadb:
-  enabled: true
-  architecture: standalone
-
-  metrics:
-    enabled: true
-
-  # TODO: use secrets for DB credentials
-  auth:
-    rootPassword: kimaiR00tPassw0rd
-    database: kimai
-    username: kimai
-    password: kimai
-
-  primary:
-    persistence:
-      enabled: true
-      storageClass:
-      accessModes:
-      - ReadWriteOnce
-      size: 4Gi
+  crds:
+    create: false
 
 ###############################################################
 # IDP
 ###############################################################
-keycloak:
-  production: true
-  proxy: edge
+keycloak-db:
+  mode: standalone
 
-  # Disable local postgres
-  postgresql:
+  backups:
     enabled: false
 
-  # Root user configuration
-  # TODO: use secrets for root user credentials
-  auth:
-    adminUser: admin
-    adminPassword: admin
-
-  # Create preconfigured realm
-  keycloakConfigCli:
-    enabled: true
-    existingConfigmap: "{{ .Release.Name }}-keycloak-realm"
-    backoffLimit: 5
-
-    cleanupAfterFinished:
-      enabled: true
-      seconds: 600
-
-  # Use external DB
-  # TODO: use secrets for DB credentials
-  externalDatabase:
-    host: "{{ .Release.Name }}-postgresql"
-    database: keycloak
-    user: testuser
-    password: testpassword
-
-  # Enable prometheus metrics endpoint
-  metrics:
-    enabled: true
+  cluster:
+    instances: 1
+    storage:
+      size: 2Gi
 
 ###############################################################
 # MONITORING
@@ -164,10 +112,11 @@ loki:
 grafana:
   enabled: true
   assertNoLeakedSecrets: false
+  envFromSecret: grafana-secret
 
-  # TODO: use secret for root user
-  adminUser: admin
-  adminPassword: admin
+  admin:
+    # Generated with external secrets generator
+    existingSecret: grafana-root-user
 
   # Enable hot reload of dashboards and datasources
   sidecar:
@@ -179,26 +128,26 @@ grafana:
   # Configure SSO with keycloak
   grafana.ini:
     server:
-      root_url: "http://grafana.{{ .Values.global.domain }}"
+      root_url: "https://grafana.{{ .Values.global.domain }}"
 
     dashboards:
       default_home_dashboard_path: /tmp/dashboards/dashboard_main.json
 
-    # TODO: use secrets for sensible parameters
     auth.generic_oauth:
       enabled: true
       name: keycloak
       allow_sign_up: true
       client_id: grafana
-      client_secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
+      client_secret: ${GENERIC_OAUTH_CLIENT_SECRET}
       scopes: openid email profile offline_access roles
       email_attribute_path: email
       login_attribute_path: username
       name_attribute_path: full_name
-      auth_url: "http://keycloak.{{ .Values.global.domain }}/realms/osss/protocol/openid-connect/auth"
-      token_url: http://osss-keycloak/realms/osss/protocol/openid-connect/token
-      api_url: http://osss-keycloak/realms/osss/protocol/openid-connect/userinfo
+      auth_url: "https://keycloak.{{ .Values.global.domain }}/realms/master/protocol/openid-connect/auth"
+      token_url: https://keycloak.{{ .Values.global.domain }}/realms/master/protocol/openid-connect/token
+      api_url: https://keycloak.{{ .Values.global.domain }}/realms/master/protocol/openid-connect/userinfo
       role_attribute_path: contains(grafana.roles[], 'admin') && 'Admin' || contains(grafana.roles[], 'editor') && 'Editor' || 'Viewer'
+
 ###############################################################
 # TOOLS
 ###############################################################

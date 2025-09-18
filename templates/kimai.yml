@@ -7,3 +7,63 @@ metadata:
 
 data:
   local.yaml: {{ include "kimai.yml" . | b64enc }}
+---
+# MariaDB using the MariaDB Operator
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: kimai-mariadb
+spec:
+  database: kimai
+  username: kimai
+  storage:
+    size: 4Gi
+  passwordSecretRef:
+    name: kimai-mariadb-secret
+    key: password
+  rootPasswordSecretRef:
+    name: kimai-mariadb-root
+    key: password
+    generate: true
+---
+# Keycloak Client for Kimai SSO
+# https://www.kimai.org/documentation/saml-keycloak.html
+apiVersion: samlclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: kimai
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    clientId: kimai
+    name: Kimai
+    description: SSO for Kimai
+    signatureAlgorithm: RSA_SHA256
+    clientSignatureRequired: false
+    nameIdFormat: email
+    forceNameIdFormat: true
+    rootUrl: https://kimai.{{ .Values.global.domain }}
+    baseUrl: https://kimai.{{ .Values.global.domain }}
+    validRedirectUris:
+    - https://kimai.{{ .Values.global.domain }}/*
+---
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: kimai-role-list
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    name: role_list
+    clientIdRef:
+      name: kimai
+    protocol: saml
+    protocolMapper: saml-role-list-mapper
+    config:
+      single: 'true'
+      attribute.nameformat: Basic
+      attribute.name: Roles

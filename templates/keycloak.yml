@@ -1,6 +1,130 @@
-apiVersion: v1
-kind: ConfigMap
+# Keycloak deployment managed by the Keycloak Operator
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
 metadata:
-  name: {{ tpl .Values.keycloak.keycloakConfigCli.existingConfigmap . }}
+  name: keycloak
+spec:
+  instances: 1
+  db:
+    vendor: postgres
+    host: {{ .Release.Name }}-keycloak-db-rw
+    database: app
+    usernameSecret:
+      name: {{ .Release.Name }}-keycloak-db-app
+      key: username
+    passwordSecret:
+      name: {{ .Release.Name }}-keycloak-db-app
+      key: password
+  http:
+    tlsSecret: {{ .Release.Name }}-tls-keycloak
+  hostname:
+    hostname: keycloak.{{ .Values.global.domain }}
+  proxy:
+    headers: xforwarded
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: keycloak.{{ .Values.global.domain }}
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: keycloak-service
+              port:
+                number: 8443
+  tls:
+  - secretName: {{ .Release.Name }}-tls-keycloak
+    hosts:
+    - keycloak.{{ .Values.global.domain }}
+---
+# Crossplane Provider for Keycloak
+apiVersion: keycloak.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: keycloak-provider-config
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: keycloak-credentials
+      key: credentials
+      namespace: {{ .Release.Namespace }}
+---
+# Parsed secret with credentials for Crossplane Keycloak provider
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: keycloak-credentials
+spec:
+  secretStoreRef:
+    name: {{ .Release.Name }}-k8s-secrets
+    kind: SecretStore
+  target:
+    name: keycloak-credentials
+    template:
+      engineVersion: v2
+      metadata:
+        labels:
+          type: provider-credentials
+      data:
+        credentials: |
+          {
+            "username": {{ `"{{ .username }}"` }},
+            "password": {{ `"{{ .password }}"` }},
+            "url": "https://keycloak.{{ .Values.global.domain }}",
+            "client_id": "admin-cli",
+            "realm": "master"
+          }
+  data:
+  - secretKey: username
+    remoteRef:
+      key: keycloak-initial-admin
+      property: username
+  - secretKey: password
+    remoteRef:
+      key: keycloak-initial-admin
+      property: password
+---
+{{- $cert := genSelfSignedCertWithKey "" (list) (list) 3650 (genPrivateKey "rsa") }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test
+type: kubernetes.io/tls
 data:
-  realm.yml: {{ include "realm.yml" . | toJson }}
+  tls.crt: |
+    {{ $cert.Cert | b64enc }}
+  tls.key: |
+    {{ $cert.Key | b64enc }}
+---
+apiVersion: realm.keycloak.crossplane.io/v1alpha1
+kind: KeystoreRsa
+metadata:
+  name: realm-keystore-rsa
+spec:
+  providerConfigRef:
+    name: keycloak-provider-config
+  forProvider:
+    realmId: master
+    priority: 200
+    algorithm: RS256
+    name: testing
+    certificateSecretRef:
+      name: test
+      namespace: {{ .Release.Namespace }}
+      key: tls.crt
+    privateKeySecretRef:
+      name: test
+      namespace: {{ .Release.Namespace }}
+      key: tls.key
+    providerId: rsa-generated

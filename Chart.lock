@@ -1,19 +1,28 @@
 dependencies:
-- name: keycloak
-  repository: https://charts.bitnami.com/bitnami
-  version: 18.4.0
+- name: crossplane
+  repository: https://charts.crossplane.io/stable
+  version: 2.0.2
+- name: cluster
+  repository: https://cloudnative-pg.github.io/charts
+  version: 0.2.1
+- name: cloudnative-pg
+  repository: https://cloudnative-pg.github.io/charts
+  version: 0.23.2
+- name: mariadb-operator
+  repository: https://helm.mariadb.com/mariadb-operator
+  version: 0.37.1
+- name: external-secrets
+  repository: https://charts.external-secrets.io
+  version: 0.12.1
 - name: ingress-nginx
   repository: https://kubernetes.github.io/ingress-nginx
   version: 4.10.0
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.14.3
-- name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 13.4.4
-- name: mariadb
-  repository: https://charts.bitnami.com/bitnami
-  version: 11.5.7
+- name: external-dns
+  repository: https://kubernetes-sigs.github.io/external-dns
+  version: 1.18.0
 - name: prometheus
   repository: https://prometheus-community.github.io/helm-charts
   version: 25.13.0
@@ -26,6 +35,9 @@ dependencies:
 - name: promtail
   repository: https://grafana.github.io/helm-charts
   version: 6.15.5
+- name: metrics-server
+  repository: https://kubernetes-sigs.github.io/metrics-server
+  version: 3.13.0
 - name: kimai2
   repository: https://robjuz.github.io/helm-charts
   version: 3.1.11
@@ -34,15 +46,12 @@ dependencies:
   version: 4.5.0
 - name: wiki
   repository: https://charts.js.wiki
-  version: 2.2.0
+  version: 2.2.23
+- name: cluster
+  repository: https://cloudnative-pg.github.io/charts
+  version: 0.2.1
 - name: planka
   repository: file://./planka
   version: 0.1.17
-- name: plane-ce
-  repository: https://helm.plane.so
-  version: 1.0.11
-- name: odoo
-  repository: https://charts.bitnami.com/bitnami
-  version: 25.6.0
-digest: sha256:5a7fc423c9263dbc5d32b9f8ced7d59b8f0bcc3596cb888ddae8565a69df4b72
-generated: "2024-03-18T17:01:39.604975895-03:00"
+digest: sha256:c82274b2c93b50becc5f177ca90d78be8fbddb294ba93ac88ebda95a98b1647c
+generated: "2025-09-15T17:49:13.63394654-03:00"

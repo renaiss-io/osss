@@ -5,19 +5,6 @@ realm: osss
 enabled: true
 roles:
   client:
-  {{- if .Values.grafana.enabled }}
-    grafana:
-      - name: "editor"
-        description: "Role for editor in grafana."
-        composite: false
-        clientRole: true
-        containerId: "grafana"
-      - name: "admin"
-        description: "Role for admin in grafana."
-        composite: false
-        clientRole: true
-        containerId: "grafana"
-  {{- end }}
   {{- if .Values.kimai2.enabled }}
     kimai:
       - name: "Management"
@@ -37,17 +24,6 @@ roles:
         containerId: "kimai"
   {{- end }}
 groups:
-  {{- if .Values.grafana.enabled }}
-  - name: "grafana-admin"
-    path: "/grafana-admin"
-    clientRoles:
-      grafana:
-        - "admin"
-  - name: "grafana-editor"
-    path: "/grafana-editor"
-    clientRoles:
-      grafana:
-        - "editor"
   {{- if .Values.kimai2.enabled }}
   - name: "kimai-admin"
     path: "/kimai-admin"
@@ -147,53 +123,6 @@ users:
   groups:
   - grafana-editor
 clients:
-{{- if .Values.grafana.enabled }}
-- id: grafana
-  name: grafana
-  clientId: grafana
-  secret: nuWbw2dO8KAiU8ZMEO5KzQWqbt42dZyW
-  description: SSO for grafana
-  rootUrl: http://grafana.{{ .Values.global.domain }}
-  baseUrl: http://grafana.{{ .Values.global.domain }}/login/generic_oauth
-  enabled: true
-  alwaysDisplayInConsole: true
-  clientAuthenticatorType: client-secret
-  redirectUris:
-  - http://grafana.{{ .Values.global.domain }}/login/generic_oauth
-  webOrigins:
-  - http://grafana.{{ .Values.global.domain }}
-  standardFlowEnabled: true
-  implicitFlowEnabled: false
-  directAccessGrantsEnabled: true
-  serviceAccountsEnabled: false
-  publicClient: false
-  frontchannelLogout: true
-  protocol: openid-connect
-  protocolMappers:
-    - name: "grafana_roles"
-      protocol: "openid-connect"
-      protocolMapper: "oidc-usermodel-client-role-mapper"
-      consentRequired: false
-      config:
-        introspection.token.claim: "true"
-        multivalued: "true"
-        userinfo.token.claim: "true"
-        id.token.claim: "true"
-        access.token.claim: "true"
-        claim.name: "grafana.roles"
-        jsonType.label: "String"
-  defaultClientScopes:
-  - web-origins
-  - acr
-  - profile
-  - roles
-  - email
-  optionalClientScopes:
-  - address
-  - phone
-  - offline_access
-  - microprofile-jwt
-{{- end }}
 {{- if .Values.planka.enabled }}
 - id: planka
   name: planka
@@ -345,4 +274,5 @@ clients:
   defaultClientScopes:
   - role_list
 {{- end }}
+
 {{- end -}}
